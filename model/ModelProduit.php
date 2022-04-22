@@ -15,8 +15,7 @@ class ModelProduit
     private $nomCategorie;
 
     /*
-     * Méthode qui affiche toutes les informations d'un livre dans cet ordre:
-     * photo, nom, nomCategorie, prix, description.
+     * Méthode qui retourne tout les livres dans produits en FETCH_CLASS 'ModelProduit'
      */
 
     public static function getAllProduits()
