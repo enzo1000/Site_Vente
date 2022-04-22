@@ -13,7 +13,7 @@ session_start();
 <body>
 
 <?php
-    echo '<p> Voiture d\'immatriculation '
+    echo '<p> Livre n°' . $produit->getId() . '</p>'
         . $produit->getNom() .
         $produit->getDescription() .'</p>';
 ?>
