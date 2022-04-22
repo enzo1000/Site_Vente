@@ -12,7 +12,7 @@ class Conf
         'hostname' => 'localhost',
 
         //Le nom de la bdd (ici progweb mais sur l'iut martineze)
-        'database' => 'progweb',
+        'database' => 'sitedevente',
 
         //A l'iut martineze, perso : root
         'login' => 'root',
