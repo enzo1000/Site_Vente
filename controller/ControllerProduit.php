@@ -17,6 +17,6 @@ class ControllerProduit
     {
         require_once File::build_path(array("model", "ModelProduit.php"));
         $produit = ModelProduit::getProduit($idProduit);
-        require_once File::build_path(array("view", ""));
+        require_once File::build_path(array("view", "single.php"));
     }
 }

@@ -27,7 +27,14 @@ class ModelProduit
 
     public static function getProduit($idProduit)
     {
-
+        $req = Model::getPDO()->prepare("SELECT * FROM produits WHERE id = :idProduit");
+        $array = array(
+            "idProduit" => $idProduit,
+        );
+        $req->execute($array);
+        $req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
+        $produit =  $req->fetchAll();
+        return $produit[0];
     }
 
     public function getId(){ return $this->id;}
