@@ -1,58 +1,53 @@
-<!DOCTYPE html>
-<html>
-    <head>
+<?php
 
-    </head>
+/*
+ * Répertorie les informations concernant la base de données
+ */
 
-    <body>
+class Conf
+{
+    static private $databases = array(
+        //Nom de l'hote distant (webinfo pour l'iut)
+        //localhost pour le local sur machine perso
+        'hostname' => 'localhost',
 
-    <?php
+        //Le nom de la bdd (ici progweb mais sur l'iut martineze)
+        'database' => 'progweb',
 
-        class Conf {
-            static private $databases = array (
-            //Nom de l'hote distant (webinfo pour l'iut)
-            //localhost pour le local sur machine perso
-            'hostname' => 'localhost',
+        //A l'iut martineze, perso : root
+        'login' => 'root',
 
-            //Le nom de la bdd (ici progweb mais sur l'iut martineze)
-            'database' => 'progweb',
+        //A l'iut 7092021, perso : root
+        'password' => 'root'
+    );
 
-            //A l'iut martineze, perso : root
-            'login' => 'root',
+    static public function getLogin()
+    {
+        return self::$databases['login'];
+    }
 
-            //A l'iut 7092021, perso : root
-            'password' => 'root'
-            );
+    static public function getHostname()
+    {
+        return self::$databases['hostname'];
+    }
 
-            static public function getLogin()
-            {
-                return self::$databases['login'];
-            }
+    static public function getDatabase()
+    {
+        return self::$databases['database'];
+    }
 
-            static public function getHostname()
-            {
-                return self::$databases['hostname'];
-            }
+    public static function getPassword()
+    {
+        return self::$databases['password'];
+    }
 
-            static public function getDatabase()
-            {
-                return self::$databases['database'];
-            }
+    // la variable debug est un boolean
+    static private $debug = True;
 
-            public static function getPassword()
-            {
-                return self::$databases['password'];
-            }
-             // la variable debug est un boolean
-            static private $debug = True;
+    static public function getDebug()
+    {
+        return self::$debug;
+    }
+}
 
-            static public function getDebug() {
-                return self::$debug;
-            }
-        }
-
-    ?>
-
-    </body>
-
-</html>
+?>

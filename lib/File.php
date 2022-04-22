@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Permet de créer un chemin absolue peut importe l'ordinateur utilisé
+ * et le système d'exploitation.
+ */
+
 class File
 {
     public static function build_path($path_array)

@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
 <?php
+
+/*
+ * Etablie la connexion avec la base de donnée en fonction de config/Conf.php
+ */
 
 require_once File::build_path(array("config", "Conf.php"));
 
@@ -42,8 +41,3 @@ class Model
     }
 
 }
-
-
-?>
-</body>
-</html>
