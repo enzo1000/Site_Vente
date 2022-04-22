@@ -35,7 +35,7 @@ class ModelProduit
         );
         $req->execute($array);
         $req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
-        $produit =  $req->fetchAll();
+        $produit = $req->fetchAll();
         return $produit[0];
     }
 
