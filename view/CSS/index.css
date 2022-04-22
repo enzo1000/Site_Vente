@@ -1,0 +1,52 @@
+body{
+    background-color: red;
+}
+.liste{
+    /*
+    background-color: aqua;
+    display: inline;
+    position: relative;
+    width: 90%;
+
+     */
+    justify-content: space-between;
+    align-content: space-between;
+}
+.ligne{/*
+    background-color: aquamarine;
+    text-align:center;
+    width: 90%;
+    position: relative;
+    display: inline;*/
+    justify-content: space-between;
+    align-content: space-between;
+
+
+}
+.article{
+    background-color: cornflowerblue;
+    width: 20%;
+    height: 20%;
+    margin: 10%;
+    align-items: center;
+}
+.image{
+    background-color: blanchedalmond;
+    width: 50%;
+    align-items: center;
+}
+
+.titre{
+    background-color: blueviolet;
+    color: red;
+    font-family: "Agency FB";
+}
+.prix{
+    background-color: crimson;
+    color: yellow;
+}
+.description{
+    background-color: brown;
+    color: black;
+
+}
