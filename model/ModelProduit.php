@@ -17,7 +17,6 @@ class ModelProduit
     /*
      * Méthode qui retourne tout les livres dans produits en FETCH_CLASS 'ModelProduit'
      */
-
     public static function getAllProduits()
     {
         $req = Model::getPDO()->query("SELECT * FROM produits");
@@ -25,6 +24,9 @@ class ModelProduit
         return $req->fetchAll();
     }
 
+    /*
+     * Méthode qui retourne un produit spécifique en fonction d'un idProduit en paramètre
+     */
     public static function getProduit($idProduit)
     {
         $req = Model::getPDO()->prepare("SELECT * FROM produits WHERE id = :idProduit");
