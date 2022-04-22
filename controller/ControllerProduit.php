@@ -8,3 +8,4 @@ class ControllerProduit
         $tab_p = ModelProduit::getAllProduits();
         require_once File::build_path(array("view.php"));
     }
+}

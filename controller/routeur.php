@@ -9,4 +9,3 @@ if(isset($_GET['action'])) {
     $action = $_GET['action'];
     ControllerProduit::$action();
 }
-
