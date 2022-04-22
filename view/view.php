@@ -12,6 +12,12 @@ session_start();
 </head>
 <body>
 
+<?php
+foreach ($tab_p as $produit)
+    echo '<p> Voiture d\'immatriculation '
+        . $produit->getDescription() . '</a> </p>';
+?>
+
 </body>
 
 </html>

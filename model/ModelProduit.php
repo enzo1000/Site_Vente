@@ -24,4 +24,11 @@ class ModelProduit {
         return $req->fetchAll();
     }
 
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+
+
 }
