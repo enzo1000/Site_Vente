@@ -25,6 +25,11 @@ class ModelProduit
         return $req->fetchAll();
     }
 
+    public static function getProduit($idProduit)
+    {
+
+    }
+
     public function getId(){ return $this->id;}
 
     public function getNom(){ return $this->nom; }

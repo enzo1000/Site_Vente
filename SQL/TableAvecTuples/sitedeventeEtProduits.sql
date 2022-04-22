@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 22, 2022 at 12:28 PM
+-- Generation Time: Apr 22, 2022 at 12:54 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -83,6 +83,44 @@ CREATE TABLE `propose` (
   `idTag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `propose`
+--
+
+INSERT INTO `propose` (`idProduit`, `idTag`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(3, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(2, 8),
+(2, 9),
+(2, 10),
+(2, 11),
+(1, 12),
+(2, 12),
+(2, 14),
+(4, 14),
+(3, 15),
+(3, 16),
+(3, 17),
+(3, 18),
+(3, 19),
+(3, 20),
+(3, 21),
+(4, 22),
+(4, 23),
+(4, 24),
+(4, 25),
+(4, 26),
+(4, 27),
+(4, 28),
+(4, 29),
+(2, 30);
+
 -- --------------------------------------------------------
 
 --
@@ -93,6 +131,41 @@ CREATE TABLE `tag` (
   `id` int(11) NOT NULL,
   `libelle` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tag`
+--
+
+INSERT INTO `tag` (`id`, `libelle`) VALUES
+(1, 'jawad'),
+(2, 'el'),
+(3, 'Hidraoui'),
+(4, 'guide'),
+(5, 'temps'),
+(6, 'gerer'),
+(7, 'devenir'),
+(8, 'sapologie'),
+(9, 'art'),
+(10, 'enzo'),
+(11, 'martinez'),
+(12, 'savoir'),
+(14, 'iut'),
+(15, 'maitre'),
+(16, 'vous'),
+(17, 'manipulation'),
+(18, 'humain'),
+(19, 'jon'),
+(20, 'snow'),
+(21, 'chien'),
+(22, 'Comment'),
+(23, 'expliquer'),
+(24, 'femme'),
+(25, 'site'),
+(26, 'faute'),
+(27, 'marche'),
+(28, 'cyrille'),
+(29, 'nadal'),
+(30, 'saper');
 
 --
 -- Indexes for dumped tables
@@ -133,6 +206,12 @@ ALTER TABLE `tag`
 --
 ALTER TABLE `produits`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables

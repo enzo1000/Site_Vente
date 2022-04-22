@@ -13,10 +13,9 @@ session_start();
 <body>
 
 <?php
-foreach ($tab_p as $produit)
-    echo '<p> Livre n°'. $produit->getId() . '</p>'
-        . "<p>" . $produit->getNom() .
-            $produit->getDescription() .'</p>';
+    echo '<p> Voiture d\'immatriculation '
+        . $produit->getNom() .
+        $produit->getDescription() .'</p>';
 ?>
 
 </body>

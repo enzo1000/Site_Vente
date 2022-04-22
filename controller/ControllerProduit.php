@@ -12,4 +12,11 @@ class ControllerProduit
         $tab_p = ModelProduit::getAllProduits();
         require_once File::build_path(array("view", "all.php"));
     }
+
+    public static function read($idProduit)
+    {
+        require_once File::build_path(array("model", "ModelProduit.php"));
+        $produit = ModelProduit::getProduit($idProduit);
+        require_once File::build_path(array("view", ""));
+    }
 }
