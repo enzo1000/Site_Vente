@@ -15,7 +15,8 @@ session_start();
 <?php
 foreach ($tab_p as $produit)
     echo '<p> Voiture d\'immatriculation '
-        . $produit->getDescription() . '</a> </p>';
+        . $produit->getDescription() .
+        $produit->getNom() .'</p>';
 ?>
 
 </body>
