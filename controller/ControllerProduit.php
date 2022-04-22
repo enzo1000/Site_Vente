@@ -19,4 +19,9 @@ class ControllerProduit
         $produit = ModelProduit::getProduit($idProduit);
         require_once File::build_path(array("view", "single.php"));
     }
+
+    public static function home() {
+        $index = File::build_path("index.php");
+        header("Location:../$index?action=readAll");
+    }
 }

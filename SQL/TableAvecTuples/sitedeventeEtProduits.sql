@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 22, 2022 at 12:54 PM
+-- Generation Time: Apr 22, 2022 at 02:36 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -50,6 +50,30 @@ INSERT INTO `categorie` (`nom`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lignepanier`
+--
+
+CREATE TABLE `lignepanier` (
+  `idProduit` int(11) NOT NULL,
+  `idPanier` int(11) NOT NULL,
+  `qte` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `panier`
+--
+
+CREATE TABLE `panier` (
+  `idPanier` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `idUtilisateur` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `produits`
 --
 
@@ -67,7 +91,7 @@ CREATE TABLE `produits` (
 --
 
 INSERT INTO `produits` (`id`, `nom`, `prix`, `description`, `photo`, `nomCategorie`) VALUES
-(1, 'Savoir bien gerer son temps', 19, 'Un livre est un document écrit formant unité et conçu comme tel, composé de pages reliées les unes aux autres. Il a pour fonction d\'être un support de l\'écriture, permettant la diffusion et la conservation de textes de nature variée.\r\n\r\nSur le plan matériel, un livre est un volume de pages reliées, présentant un ou des textes sous une page de titre commune. Sa forme induit une organisation linéaire (pagination, chapitres, etc.). Un livre comporte généralement des outils favorisant l\'accès à son contenu : table des matières, sommaire, index. Il existe une grande variété de livres selon le genre, les destinataires, ainsi que selon le mode de fabrication et les formats, ou selon les usages. Sauf exception, tel le livre d\'artiste, un livre est publié en plusieurs exemplaires par un éditeur, comme en témoignent les éléments d\'identification qu\'il comporte obligatoirement.', 'savoir_bien_gerer_son-temps/', 'Guide'),
+(1, 'Savoir bien gerer son temps', 19, 'Un livre est un document écrit formant unité et conçu comme tel, composé de pages reliées les unes aux autres. Il a pour fonction d\'être un support de l\'écriture, permettant la diffusion et la conservation de textes de nature variée.\r\n\r\nSur le plan matériel, un livre est un volume de pages reliées, présentant un ou des textes sous une page de titre commune. Sa forme induit une organisation linéaire (pagination, chapitres, etc.). Un livre comporte généralement des outils favorisant l\'accès à son contenu : table des matières, sommaire, index. Il existe une grande variété de livres selon le genre, les destinataires, ainsi que selon le mode de fabrication et les formats, ou selon les usages. Sauf exception, tel le livre d\'artiste, un livre est publié en plusieurs exemplaires par un éditeur, comme en témoignent les éléments d\'identification qu\'il comporte obligatoirement.', 'savoir_bien_gerer_son_temps', 'Guide'),
 (2, 'L\'art de la sapologie', 3000, 'Un livre est un document écrit formant unité et conçu comme tel, composé de pages reliées les unes aux autres. Il a pour fonction d\'être un support de l\'écriture, permettant la diffusion et la conservation de textes de nature variée.\r\n\r\nSur le plan matériel, un livre est un volume de pages reliées, présentant un ou des textes sous une page de titre commune. Sa forme induit une organisation linéaire (pagination, chapitres, etc.). Un livre comporte généralement des outils favorisant l\'accès à son contenu : table des matières, sommaire, index. Il existe une grande variété de livres selon le genre, les destinataires, ainsi que selon le mode de fabrication et les formats, ou selon les usages. Sauf exception, tel le livre d\'artiste, un livre est publié en plusieurs exemplaires par un éditeur, comme en témoignent les éléments d\'identification qu\'il comporte obligatoirement.', 'sapologie', 'Drama'),
 (3, 'Le guide de manipulation sur humain', 30, 'Un livre est un document écrit formant unité et conçu comme tel, composé de pages reliées les unes aux autres. Il a pour fonction d\'être un support de l\'écriture, permettant la diffusion et la conservation de textes de nature variée.\r\n\r\nSur le plan matériel, un livre est un volume de pages reliées, présentant un ou des textes sous une page de titre commune. Sa forme induit une organisation linéaire (pagination, chapitres, etc.). Un livre comporte généralement des outils favorisant l\'accès à son contenu : table des matières, sommaire, index. Il existe une grande variété de livres selon le genre, les destinataires, ainsi que selon le mode de fabrication et les formats, ou selon les usages. Sauf exception, tel le livre d\'artiste, un livre est publié en plusieurs exemplaires par un éditeur, comme en témoignent les éléments d\'identification qu\'il comporte obligatoirement.', 'guide', 'Chat'),
 (4, 'Comment expliquer à ma femme que si le site marche pas c\'est pas ma faute', 15, 'Un livre est un document écrit formant unité et conçu comme tel, composé de pages reliées les unes aux autres. Il a pour fonction d\'être un support de l\'écriture, permettant la diffusion et la conservation de textes de nature variée.\r\n\r\nSur le plan matériel, un livre est un volume de pages reliées, présentant un ou des textes sous une page de titre commune. Sa forme induit une organisation linéaire (pagination, chapitres, etc.). Un livre comporte généralement des outils favorisant l\'accès à son contenu : table des matières, sommaire, index. Il existe une grande variété de livres selon le genre, les destinataires, ainsi que selon le mode de fabrication et les formats, ou selon les usages. Sauf exception, tel le livre d\'artiste, un livre est publié en plusieurs exemplaires par un éditeur, comme en témoignent les éléments d\'identification qu\'il comporte obligatoirement.', 'comment', 'Humour');
@@ -167,6 +191,19 @@ INSERT INTO `tag` (`id`, `libelle`) VALUES
 (29, 'nadal'),
 (30, 'saper');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `utilisateur`
+--
+
+CREATE TABLE `utilisateur` (
+  `nom` varchar(100) NOT NULL,
+  `prenom` varchar(100) NOT NULL,
+  `mail` varchar(100) NOT NULL,
+  `mdp` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
@@ -176,6 +213,20 @@ INSERT INTO `tag` (`id`, `libelle`) VALUES
 --
 ALTER TABLE `categorie`
   ADD PRIMARY KEY (`nom`);
+
+--
+-- Indexes for table `lignepanier`
+--
+ALTER TABLE `lignepanier`
+  ADD PRIMARY KEY (`idProduit`,`idPanier`),
+  ADD KEY `pk_idPanier` (`idPanier`);
+
+--
+-- Indexes for table `panier`
+--
+ALTER TABLE `panier`
+  ADD PRIMARY KEY (`idPanier`,`idUtilisateur`),
+  ADD KEY `pk_idUtilisateur` (`idUtilisateur`);
 
 --
 -- Indexes for table `produits`
@@ -198,8 +249,20 @@ ALTER TABLE `tag`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`mail`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `panier`
+--
+ALTER TABLE `panier`
+  MODIFY `idPanier` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `produits`
@@ -216,6 +279,19 @@ ALTER TABLE `tag`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `lignepanier`
+--
+ALTER TABLE `lignepanier`
+  ADD CONSTRAINT `pk_idPanier` FOREIGN KEY (`idPanier`) REFERENCES `panier` (`idPanier`),
+  ADD CONSTRAINT `pk_idProduitPanier` FOREIGN KEY (`idProduit`) REFERENCES `produits` (`id`);
+
+--
+-- Constraints for table `panier`
+--
+ALTER TABLE `panier`
+  ADD CONSTRAINT `pk_idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateur` (`mail`);
 
 --
 -- Constraints for table `produits`

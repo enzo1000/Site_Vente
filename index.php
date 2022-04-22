@@ -1,4 +1,8 @@
 <?php
+
+//67 mms ovg équipe, la sessino est lancée.
+session_start();
+
 require_once "./lib/File.php";
 
 ini_set('display_errors', 1);

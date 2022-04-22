@@ -14,4 +14,5 @@ include_once File::build_path(array("controller", "ControllerProduit.php"));
     }
     else
         ControllerProduit::$action();
-}
+} else
+    ControllerProduit::home();
