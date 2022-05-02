@@ -1,5 +1,5 @@
 body{
-    background-color: red;
+    background-color: yellow;
 }
 .liste{
     /*
@@ -9,44 +9,69 @@ body{
     width: 90%;
 
      */
-    justify-content: space-between;
-    align-content: space-between;
-}
-.ligne{/*
-    background-color: aquamarine;
-    text-align:center;
-    width: 90%;
-    position: relative;
-    display: inline;*/
-    justify-content: space-between;
-    align-content: space-between;
+    background-color: aqua;
+
+    width: 100%;
 
 
+    display: flex;
+    flex: 1;
+
 }
+
 .article{
-    background-color: cornflowerblue;
-    width: 20%;
-    height: 20%;
-    margin: 10%;
-    align-items: center;
+    background-color: beige;
+
+    height: 90%;
+    margin: 2%;
+    min-width: 300px;
+width: auto;
+    max-width: 600px;
+
+
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+    border-radius: 10px;
+
+}
+a{
+    display:inline-block;
+    margin: 5%;
+    outline: none;
+    text-decoration: none;
+
 }
 .image{
-    background-color: blanchedalmond;
-    width: 50%;
-    align-items: center;
+
+    float: left;
+    align-content: center;
+    margin-bottom: 10px;
+}
+.image img{
+    width: 100%;
 }
 
 .titre{
-    background-color: blueviolet;
-    color: red;
+    font-weight: bold;
+    font-size: 40px;
     font-family: "Agency FB";
+    color: black;
 }
 .prix{
-    background-color: crimson;
-    color: yellow;
+    /*background-color: crimson;
+
+     */
+    color: darkblue;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: right;
+    margin-bottom: 10px;
 }
 .description{
-    background-color: brown;
+    /*background-color: brown;
+
+     */
     color: black;
 
 }
