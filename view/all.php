@@ -10,29 +10,24 @@
         } else echo "Guest"; ?></title>
 </head>
 <body>
+
 <div class='liste'>
 
 <?php
-
 foreach ($tab_p as $produit) {
 
     echo "<div class='article'>"
-        ."<a href='..'>"
+        ."<div class='container'>"
         . "<div class='image'>"
         . "<img src='view/images/" . $produit->getPhoto() . "/1.png' class='image' alt=" . "texte alternatif" . " title=" . "Titre de l'image/>"
         . "</div>"
         . "<div class='titre'>" . $produit->getNom() . "</div>"
         . "<div class='prix'>" . $produit->getPrix() . " €</div>"
         . "<div class='description'>" . $produit->getDescription() . "</div>"
-        ."</a>"
+        ."</div>"
         ."</div>";
 
 }
-
-
-
-
-//<p> Livre n°'. $produit->getId() . '</p>'
 ?>
 
 </div>

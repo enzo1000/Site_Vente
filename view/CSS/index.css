@@ -1,77 +1,53 @@
-body{
+body {
     background-color: yellow;
 }
-.liste{
-    /*
-    background-color: aqua;
-    display: inline;
-    position: relative;
-    width: 90%;
 
-     */
+.liste {
     background-color: aqua;
-
     width: 100%;
-
-
+    height: fit-content;
     display: flex;
-    flex: 1;
 
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
-.article{
+.article {
     background-color: beige;
 
-    height: 90%;
-    margin: 2%;
-    min-width: 300px;
-width: auto;
-    max-width: 600px;
+    margin: 15px;
+    min-width: 25%;
+    max-width: 30%;
 
-
-    display: flex;
-    justify-content: space-around;
-    align-content: center;
     border-radius: 10px;
-
+    height: fit-content;
 }
-a{
-    display:inline-block;
+
+.container {
     margin: 5%;
-    outline: none;
-    text-decoration: none;
-
-}
-.image{
-
-    float: left;
-    align-content: center;
-    margin-bottom: 10px;
-}
-.image img{
-    width: 100%;
 }
 
-.titre{
+.image img {
+    max-width: 100%;
+}
+
+.titre {
     font-weight: bold;
-    font-size: 40px;
-    font-family: "Agency FB";
+    font-size: 350%;
+    font-family: "Agency FB", "Calibri", "emoji";
     color: black;
+    overflow-wrap: break-word;
 }
-.prix{
-    /*background-color: crimson;
 
-     */
+.prix {
     color: darkblue;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 200%;
     text-align: right;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
-.description{
-    /*background-color: brown;
 
-     */
+.description {
     color: black;
-
 }
