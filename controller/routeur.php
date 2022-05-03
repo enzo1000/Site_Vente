@@ -5,7 +5,6 @@ include_once File::build_path(array("controller", "ControllerProduit.php"));
 // On recupère l'action passée dans l'URL et un paramètre optionnel
 
  if(isset($_GET['action'])) {
-
     $action = $_GET['action'];
 
     if (isset($_GET['param'])) {

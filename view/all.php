@@ -15,29 +15,29 @@
 
 <div class='liste'>
 
-<?php
-foreach ($tab_p as $produit) {
+    <?php
+    foreach ($tab_p as $produit) {
 
-    echo "<div class='article'>"
-        ."<div class='container'>"
-        . "<div class='image'>"
-        . "<img src='view/images/" . $produit->getPhoto() . "/1.png' class='image' alt=" . "texte alternatif" . " title=" . "Titre de l'image/>"
-        . "</div>"
-        . "<div class='titre'>"
-        . "<a href=''>" . $produit->getNom() . "</a>"
-        . "</div>"
-        . "<div class='prix'>" . $produit->getPrix() . " €</div>"
-        . "<div class='description'>" . $produit->getDescription() . "</div>"
-        /*
-        . "<button type='button' class='btn btn-info btn-circle btn-lg'><i class='glyphicon glyphicon-ok'></i></button>"
-        . "<button type='button' class='btn btn-danger btn-circle btn-lg'><i class='glyphicon glyphicon-heart'></i></button>"
-        */
-        ."<button class='like'></button>"
-        ."</div>"
-        ."</div>";
+        echo "<div class='article'>"
+            ."<div class='container'>"
+            . "<div class='image'>"
+            . "<img src='view/images/" . $produit->getPhoto() . "/1.png' class='image' alt=" . "texte alternatif" . " title=" . "Titre de l'image/>"
+            . "</div>"
+            . "<div class='titre'>"
+            . "<a href=''>" . $produit->getNom() . "</a>"
+            . "</div>"
+            . "<div class='prix'>" . $produit->getPrix() . " €</div>"
+            . "<div class='description'>" . $produit->getDescription() . "</div>"
+            /*
+            . "<button type='button' class='btn btn-info btn-circle btn-lg'><i class='glyphicon glyphicon-ok'></i></button>"
+            . "<button type='button' class='btn btn-danger btn-circle btn-lg'><i class='glyphicon glyphicon-heart'></i></button>"
+            */
+            ."<button class='like'></button>"
+            ."</div>"
+            ."</div>";
 
-}
-?>
+    }
+    ?>
 
 </div>
 

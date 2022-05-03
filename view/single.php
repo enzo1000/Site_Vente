@@ -6,8 +6,10 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="CSS/index.css">
-    <title>Jeu de <?php
-        if(isset($_SESSION['pseudo'])) {echo $_SESSION['pseudo'];}
+    <title>Bienvenue <?php
+        if(isset($_SESSION['pseudo'])) {
+            echo $_SESSION['pseudo'];
+        }
         else echo "Guest"?></title>
 </head>
 <body>
