@@ -58,7 +58,7 @@ a {
     max-height: 100px;
     overflow: hidden;
 }
-
+/*
 .btn-circle.btn-lg {
     width: 50px;
     height: 50px;
@@ -66,4 +66,18 @@ a {
     font-size: 18px;
     line-height: 0.75;
     border-radius: 25px;
+}
+
+ */
+.like{
+    border-radius: 100px;
+    width: 45px;
+    height: 45px;
+    background-color: #EDE9F7;
+    background-image: url("../images/logo_coeur_active.png") ;
+    background-size: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border:none;
+
 }
