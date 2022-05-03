@@ -2,6 +2,10 @@ body {
     background-color: yellow;
 }
 
+a {
+    text-decoration: none;
+}
+
 .liste {
     background-color: aqua;
     width: 100%;
@@ -10,7 +14,7 @@ body {
 
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
 
 .article {
@@ -21,7 +25,8 @@ body {
     max-width: 30%;
 
     border-radius: 10px;
-    height: fit-content;
+    max-height: 100px;
+    overflow: hidden;
 }
 
 .container {
