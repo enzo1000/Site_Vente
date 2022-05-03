@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class='liste'>
+<div class='header'>
 
     <?php
     ?>
