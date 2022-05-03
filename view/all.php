@@ -25,15 +25,28 @@
             . "</div>"
             . "<div class='titre'>"
             . "<a href=''>" . $produit->getNom() . "</a>"
+            . "<a href=''>" . $produit->getNom() . "</a>"
             . "</div>"
             . "<div class='prix'>" . $produit->getPrix() . " €</div>"
             . "<div class='description'>" . $produit->getDescription() . "</div>"
-            ."<button class='like'></button>"
+            ."<button class='like button' id='".$produit->getId() . "'onclick='myFunction(".$produit->getId() . ")'></button>"
+            ."<button class='button' onclick='myFunction()'></button>"
             ."</div>"
             ."</div>";
 
     }
     ?>
+
+
+    <script type="text/javascript">
+
+
+        function myFunction(id){
+            console.log(id);
+        document.getElementById(id).style.backgroundColor = "#FEEBEA";
+        document.getElementById(id).style.backgroundImage = "url('view/images/logo_coeur_active.png')";
+        }
+    </script>
 
 </div>
 
