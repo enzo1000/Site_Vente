@@ -38,16 +38,9 @@ class ModelProduit
     }
 
     public function getId(){ return $this->id;}
-
     public function getNom(){ return $this->nom; }
-
     public function getPrix(){ return $this->prix; }
-
     public function getDescription(){ return $this->description; }
-
     public function getPhoto() { return $this->photo; }
-
     public function getNomCategorie(){ return $this->nomCategorie; }
-
-
 }

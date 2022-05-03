@@ -11,8 +11,7 @@ class ModelLignePanier
      * à partir d'un idPanier fournit en paramètre
      */
     public static function getAllProduitsPanier($idPanier) {
-        $req = Model::getPDO()->prepare( "SELECT idProduit, qte FROM lignePanier
-             WHERE idPanier = :idPanier");
+        $req = Model::getPDO()->prepare( "SELECT idProduit, qte FROM lignePanier WHERE idPanier = :idPanier");
         $array = array(
             "idPanier" => $idPanier,
         );

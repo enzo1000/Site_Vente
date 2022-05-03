@@ -21,6 +21,6 @@ class ControllerProduit
     }
 
     public static function home() {
-        header("Location:./index.php?action=readAll_Produit");
+        header("Location:./index.php?controller=ControllerProduit&action=readAll_Produit");
     }
 }
