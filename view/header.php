@@ -14,12 +14,14 @@
 <body>
 
 <div class='header'>
-
+    <button type="button" >
     <?php
+        echo "<a href= ./index.php?controller=ControllerPanier&action=test>";
+        echo "Panier Piano";
+        echo "</a>";
     ?>
+    </button>
 
 </div>
-
 </body>
-
 </html>

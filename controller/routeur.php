@@ -1,17 +1,23 @@
 <?php
 
+// On recupère l'action passée dans l'URL et un paramètre optionnel
 include_once File::build_path(array("controller", "ControllerProduit.php"));
 
-// On recupère l'action passée dans l'URL et un paramètre optionnel
+if (isset($_GET['controller'])) {
+    $controller = $_GET['controller'];
 
- if(isset($_GET['action'])) {
-    $action = $_GET['action'];
+    include_once File::build_path(array("controller", "$controller.php"));
 
-    if (isset($_GET['param'])) {
-        $param = $_GET['param'];
-        ControllerProduit::$action($param);
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+
+        if (isset($_GET['param'])) {
+            $param = $_GET['param'];
+            $controller::$action($param);
+        } else
+            $controller::$action();
     }
     else
-        ControllerProduit::$action();
+        ControllerProduit::home();
 } else
     ControllerProduit::home();

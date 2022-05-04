@@ -4,6 +4,7 @@ body {
 
 a {
     text-decoration: none;
+    font-size: 250%;
 }
 
 .liste {
@@ -14,7 +15,7 @@ a {
 
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .article {
@@ -26,7 +27,6 @@ a {
 
     border-radius: 10px;
     height: fit-content;
-    overflow: hidden;
 }
 
 .container {
@@ -38,8 +38,9 @@ a {
 }
 
 .titre {
+    display: flex;
+    justify-content: center;
     font-weight: bold;
-    font-size: 350%;
     font-family: "Agency FB", "Calibri", "emoji";
     color: black;
     overflow-wrap: break-word;
@@ -53,10 +54,11 @@ a {
     margin-bottom: 15px;
 }
 
-.description {
+.container .description {
     color: black;
     max-height: 100px;
     overflow: hidden;
+    background-color: beige;
 }
 
 .button{
