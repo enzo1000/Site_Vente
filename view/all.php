@@ -29,8 +29,8 @@
             . "</div>"
             . "<div class='prix'>" . $produit->getPrix() . " €</div>"
             . "<div class='description'>" . $produit->getDescription() . "</div>"
-            ."<button class='like button' id='".$produit->getId() . "'onclick='myFunction(".$produit->getId() . ")'></button>"
-            ."<button class='button' onclick='myFunction()'></button>"
+            ."<button class='like button' id='like:".$produit->getId() . "' onclick='addlike(id)';></button>"
+            ."<button class='add button' id='add:".$produit->getId() . "'onclick='addtocart(id)';></button>"
             ."</div>"
             ."</div>";
 
@@ -41,10 +41,14 @@
     <script type="text/javascript">
 
 
-        function myFunction(id){
-            console.log(id);
+        function addlike(id){
         document.getElementById(id).style.backgroundColor = "#FEEBEA";
         document.getElementById(id).style.backgroundImage = "url('view/images/logo_coeur_active.png')";
+        }
+
+        function addtocart(id){
+            document.getElementById(id).style.backgroundColor = "#3BAD27";
+            document.getElementById(id).style.backgroundImage = "url('view/images/logo_panier_active.png')";
         }
     </script>
 
