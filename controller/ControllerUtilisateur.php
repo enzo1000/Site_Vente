@@ -28,4 +28,9 @@ class ControllerUtilisateur {
         require_once File::build_path(array("model","ModelUtilisateur.php"));
         ModelUtilisateur::inscriptionUtilisateur();
     }
+
+    public static function deconnexion_Utilisateur() {
+        require_once File::build_path(array("model", "ModelUtilisateur.php"));
+        ModelUtilisateur::deconnexionUtilisateur();
+    }
 }

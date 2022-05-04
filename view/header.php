@@ -2,11 +2,17 @@
 <html lang="fr">
 <head>
 
+    <title>Bienvenue <?php
+        if (isset($_SESSION['ModelUtilisateur'])) {
+            echo $_SESSION['nom'];
+        } else echo "Guest"; ?>
+    </title>
+
     <style>
-        .header  {
+        .header {
             height: 90px;
             margin: 0;
-            background : #000000;
+            background: #000000;
         }
     </style>
 
@@ -14,21 +20,30 @@
 <body>
 
 <div class='header'>
-    <button type="button" >
-    <?php
+    <button type="button">
+        <?php
         echo "<a href= ./index.php?controller=ControllerPanier&action=test>";
         echo "Panier Piano";
         echo "</a>";
-    ?>
+        ?>
     </button>
 
-    <button type="button" >
-        <?php
+    <?php
+    if (!isset($_SESSION['ModelUtilisateur'])) {
+        echo "<button type='button' >";
         echo "<a href= ./index.php?controller=ControllerUtilisateur&action=printForm_Utilisateur&param=formConnexion>";
         echo "Connexion";
         echo "</a>";
-        ?>
-    </button>
+        echo "</button>";
+    } else {
+        echo "<button type='button' >";
+        echo "<a href= ./index.php?controller=ControllerUtilisateur&action=deconnexion_Utilisateur>";
+        echo "Deconnexion";
+        echo "</a>";
+        echo "</button>";
+    }
+    ?>
+
 
 </div>
 </body>

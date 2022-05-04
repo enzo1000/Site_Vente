@@ -3,11 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="view/CSS/index.css">
-
-    <title>Jeu de <?php
-        if (isset($_SESSION['pseudo'])) {
-            echo $_SESSION['pseudo'];
-        } else echo "Guest"; ?></title>
 </head>
 <body>
 
@@ -21,7 +16,7 @@
         echo "<div class='article'>"
             ."<div class='container'>"
             . "<div class='image'>"
-            . "<img src='view/images/" . $produit->getPhoto() . "/1.png' class='image' alt=" . "texte alternatif" . " title=" . "Titre de l'image/>"
+            . "<img src='view/images/" . $produit->getPhoto() . "/1.png' class='image' alt=" . "Produit_" . $produit->getId() . " title=" . $produit->getId() . ">"
             . "</div>"
             . "<div class='titre'>"
             . "<a href=./index.php?controller=ControllerProduit&action=read_Produit&param=" . $produit->getId() . ">" . $produit->getNom() . "</a>"
@@ -49,7 +44,6 @@
 
 
     }
-    var_dump($panier);
     ?>
 
 

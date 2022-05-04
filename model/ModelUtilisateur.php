@@ -65,12 +65,12 @@ class ModelUtilisateur
 
                 //On indexe dans session notre utilisateur
 
-                $_SESSION['Utilisateur'] = $reponse[0];
-                $_SESSION['Utilisateur']['nom'] = $reponse[0]['nom'];
-                $_SESSION['Utilisateur']['prenom'] = $reponse[0]['prenom'];
-                $_SESSION['Utilisateur']['mail'] = $reponse[0]['mail'];
-                $_SESSION['Utilisateur']['mdp'] = $reponse[0]['mdp'];
+                $_SESSION['ModelUtilisateur']['nom'] = $reponse[0]->getNom();
+                $_SESSION['ModelUtilisateur']['prenom'] = $reponse[0]->getPrenom();
+                $_SESSION['ModelUtilisateur']['mail'] = $reponse[0]->getMail();
+                $_SESSION['ModelUtilisateur']['mdp'] = $reponse[0]->getMdp();
 
+                header("Location:index.php");
             }
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
@@ -120,12 +120,11 @@ class ModelUtilisateur
                 $requete->execute($values);
                 echo "Bienvenue !" . $_POST['nom'] . $_POST['prenom'];
                 header("Location:index.php");
-                //echo "<a href='index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur'> cliquez ici pour se connecter</a>";
             }
         }
     }
 
-    public static function deconnexion()
+    public static function deconnexionUtilisateur()
     {
         session_destroy();
         unset($_SESSION);
