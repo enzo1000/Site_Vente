@@ -1,5 +1,7 @@
 <?php
 
+include_once File::build_path(array("model", "Model.php"));
+
 class ModelUtilisateur
 {
     private $nom;
@@ -14,7 +16,8 @@ class ModelUtilisateur
         return $req->fetchAll();
     }
 
-    public static function getUtilisateur($idUtil) {
+    public static function getUtilisateur($idUtil)
+    {
         $req = Model::getPDO()->prepare("SELECT * FROM utilisateurs WHERE id = :idUtil");
         $array = array(
             "idUtil" => $idUtil,
@@ -25,51 +28,51 @@ class ModelUtilisateur
         return $utilisateur[0];
     }
 
-    public static function connexionUtilisateur(){
+    /**
+     * A partir d'un mail et d'un mdp fournit en formulaires ou dans $_SESSION, (suite à un passage dans inscription)
+     * si l'utilisateur n'a pas de compte alors on re-affiche le formulaire de connexion
+     * tout en proposant à l'utilisateur de créer un compte.
+     * Sinon, on ajoute les informations de l'utilisateur dans $_SESSION['Utilisateur']
+     */
+
+    public static function connexionUtilisateur()
+    {
         try {
-            $sql = "SELECT * FROM utilisateur WHERE mail= :mail AND mdp=:mdp";
+            $sql = "SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp";
             $requete = Model::getPDO()->prepare($sql);
-            if(isset($_POST['mail'])&&isset($_POST['mdp'])){
+
+            if (isset($_SESSION['mail']) && isset($_SESSION['mdp'])) {
+                $values = array(
+                    "mail" => $_SESSION['mail'],
+                    "mdp" => $_SESSION['mdp'],
+                );
+            } else if (isset($_POST['mail']) && isset($_POST['mdp'])) {
                 $values = array(
                     "mail" => $_POST['mail'],
                     "mdp" => $_POST['mdp'],
                 );
             }
-            else if(isset($_SESSION['mail'])&&isset($_SESSION['mdp'])){
-                $values = array(
-                    "value1" => $_SESSION['mail'],
-                    "value2" => $_SESSION['mdp'],
-                );
-            }
 
             $requete->execute($values);
-            //$requete->setFetchMode(PDO::FETCH_CLASS, 'ModelJoueur');
+            $requete->setFetchMode(PDO::FETCH_CLASS, 'ModelUtilisateur');
             $reponse = $requete->fetchAll();
 
             if ($reponse == false) {
-                echo "mdp ou mail incorrect";
-                self::formConnexion();
-                echo "<a href='index.php?controller=ICD&action=formInscription'> pas de compte ? créer un compte mtn</a>";
+                require File::build_path(array("view", "formulaires", "formConnexion.php"));
+                echo "mdp ou mail incorrect" . "<br>";
+                echo "<a href='./index.php?controller=ControllerUtilisateur&action=printForm_Utilisateur&param=formInscription'> pas de compte ? créer un compte mtn</a>";
             } else {
-                // echo "<pre>";
-                //var_dump($reponse);
-                $_SESSION['joueur']=$reponse[0];
-                $_SESSION['pseudo']=$reponse[0]['pseudo'];
-                //var_dump($_SESSION['pseudo']);
-                $_SESSION['mail']=$reponse[0]['mail'];
-                $_SESSION['mdp']=$reponse[0]['mdp'];
-                //var_dump($_SESSION['mail']);
-                // header("Location:view/accueil.php");
 
-                /*
-                $sql = "SELECT mail FROM admin WHERE mail='{$_POST['mail']}'";
-                $requete=$conn->query($sql);
-                if($reponse!=false){
-                    echo "<a href='admin.php'> gérer les créatures </a>";
-                }*/
+                //On indexe dans session notre utilisateur
+
+                $_SESSION['Utilisateur'] = $reponse[0];
+                $_SESSION['Utilisateur']['nom'] = $reponse[0]['nom'];
+                $_SESSION['Utilisateur']['prenom'] = $reponse[0]['prenom'];
+                $_SESSION['Utilisateur']['mail'] = $reponse[0]['mail'];
+                $_SESSION['Utilisateur']['mdp'] = $reponse[0]['mdp'];
+
             }
-        }
-        catch(PDOException $e) {
+        } catch (PDOException $e) {
             if (Conf::getDebug()) {
                 echo $e->getMessage();
             } else {
@@ -77,12 +80,75 @@ class ModelUtilisateur
             }
             die();
         }
-
     }
 
+    /**
+     *  Suite au passage de l'utilisateur par le formulaire d'inscription,
+     * On vérifie si ses mots de passes sont valides puis que son adresses mail n'est pas déjà utilisée
+     *
+     */
 
-    public function getNom() { return $this->nom; }
-    public function getPrenom(){ return $this->prenom; }
-    public function getMail(){ return $this->mail; }
-    public function getMdp(){ return $this->mdp; }
+    public static function inscriptionUtilisateur()
+    {
+        if ($_POST['mdp'] != $_POST['mdp2']) {
+            require File::build_path(array("view", "formulaires", "formInscription.php"));
+            echo "<p>deux mdp non identiques, veuillez resaisir <p> <div></div> <div></div>";
+        } else {
+            $sql = "SELECT COUNT(*) FROM utilisateur WHERE mail = :mail";
+            $requete = Model::getPDO()->prepare($sql);
+            $values = array(
+                "mail" => $_POST['mail']
+            );
+
+            $requete->execute($values);
+            $reponse = $requete->fetch(PDO::FETCH_NUM);
+
+            if ($reponse[0] != 0) {
+                require File::build_path(array("view", "formulaires", "formInscription.php"));
+                echo "Ce mail a déjà été utilisée";
+
+            } else {
+                $newCompte = "INSERT INTO utilisateur(nom, prenom, mail, mdp) VALUES (:nom, :prenom, :mail, :mdp)";
+                $requete = Model::getPDO()->prepare($newCompte);
+                $values = array(
+                    "nom" => $_POST['nom'],
+                    "prenom" => $_POST['prenom'],
+                    "mail" => $_POST['mail'],
+                    "mdp" => $_POST['mdp']
+                );
+
+                $requete->execute($values);
+                echo "Bienvenue !" . $_POST['nom'] . $_POST['prenom'];
+                header("Location:index.php");
+                //echo "<a href='index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur'> cliquez ici pour se connecter</a>";
+            }
+        }
+    }
+
+    public static function deconnexion()
+    {
+        session_destroy();
+        unset($_SESSION);
+        header("Location:index.php");
+    }
+
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    public function getMail()
+    {
+        return $this->mail;
+    }
+
+    public function getMdp()
+    {
+        return $this->mdp;
+    }
 }
