@@ -4,7 +4,7 @@
 
     <title>Bienvenue <?php
         if (isset($_SESSION['ModelUtilisateur'])) {
-            echo $_SESSION['nom'];
+            echo $_SESSION['ModelUtilisateur']['nom'];
         } else echo "Guest"; ?>
     </title>
 
