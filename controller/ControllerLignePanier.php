@@ -10,17 +10,16 @@ class ControllerLignePanier
         require_once File::build_path(array("view", "all.php"));
     }
 
-    public static function add_LignePanier($idPanier)
+    public static function add_LignePanier($idProduit)
     {
         require_once File::build_path(array("model", "ModelLignePanier.php"));
-        ModelLignePanier::truc();
-        //header("Location:index.php?");
+        ModelLignePanier::addLignePanier($idProduit);
     }
-    public static function remove_LignePanier($idPanier)
+
+    public static function remove_LignePanier($idProduit)
     {
         require_once File::build_path(array("model", "ModelLignePanier.php"));
-        ModelLignePanier::truc();
-        //header("Location:index.php?");
+        ModelLignePanier::removeLignePanier($idProduit);
     }
 
 

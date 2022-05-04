@@ -14,7 +14,7 @@
     foreach ($tab_p as $produit) {
 
         echo "<div class='article'>"
-            ."<div class='container'>"
+            . "<div class='container'>"
             . "<div class='image'>"
             . "<img src='view/images/" . $produit->getPhoto() . "/1.png' class='image' alt=" . "Produit_" . $produit->getId() . " title=" . $produit->getId() . ">"
             . "</div>"
@@ -23,45 +23,44 @@
             . "</div>"
             . "<div class='prix'>" . $produit->getPrix() . " €</div>"
             . "<div class='description'>" . $produit->getDescription() . "</div>"
-            ."<button class='like button' id='like:".$produit->getId() . "' onclick='addlike(id)';></button>"
-            ."<button class='add button' id='add:".$produit->getId() . "'onclick='addtocart(id)';></button>"
-            ."<a href='index.php?controller=ControllerLignePanier&param=" . $produit->getId() . "&action=add_LignePanier'><button>+</button></a>"
-            . "<a href='index.php?controller=ControllerLignePanier&param=" . $produit->getId() . "&action=remove_LignePanier'><button>-</button></a>";
 
+            . "<button class='like button' id='like:" . $produit->getId() . "' onclick='likeJS(id)'></button>"
 
+            . "<a href='index.php?controller=ControllerLignePanier&action=add_LignePanier&param=" . $produit->getId() . "'>"
+            . "<button class='add button' id='add:" . $produit->getId() . "'onclick='addJS(id)'></button>"
+            . "</a>"
 
-            if (isset($_SESSION['panier2'])){
-                foreach ($_SESSION['panier2'] as $index => $produit){
-                    $qte = $produit['qte'];
-                }
-            }
-            else
-                $qte = 0;
+            . "<a href='index.php?controller=ControllerLignePanier&action=remove_LignePanier&param=" . $produit->getId() . "'>"
+            . "<button class='remove button' id='remove:" . $produit->getId() . "'onclick='removeJS(id)'></button>"
+            . "</a>";
 
-            echo "<input type='text' value=".$qte." size='1'>"
-                ."</div>"
-                ."</div>";
+        if (isset($_SESSION['panierSiteDeVente'][$produit->getId()]))
+            echo $_SESSION['panierSiteDeVente'][$produit->getId()]['qte'];
 
-
+        echo "</div>"
+            . "</div>";
     }
     ?>
 
-
-    <script type="text/javascript">
-
-
-        function addlike(id){
-            document.getElementById(id).style.backgroundColor = "#FEEBEA";
-            document.getElementById(id).style.backgroundImage = "url('view/images/logo_coeur_active.png')";
-        }
-
-        function addtocart(id){
-            document.getElementById(id).style.backgroundColor = "#3BAD27";
-            document.getElementById(id).style.backgroundImage = "url('view/images/logo_panier_active.png')";
-        }
-    </script>
-
 </div>
+
+<script type="text/javascript">
+    function likeJS(id) {
+        document.getElementById(id).style.backgroundColor = "#FEEBEA";
+        document.getElementById(id).style.backgroundImage = "url('view/images/logo_coeur_active.png')";
+    }
+
+    function addJS(id) {
+        document.getElementById(id).style.backgroundColor = "#3BAD27";
+        document.getElementById(id).style.backgroundImage = "url('view/images/logo_panier_active_add.png')";
+    }
+
+    function removeJS(id) {
+        document.getElementById(id).style.backgroundColor = "#FF0000";
+        document.getElementById(id).style.backgroundImage = "url('view/images/logo_panier_active_rem.png')";
+    }
+</script>
+
 
 </body>
 

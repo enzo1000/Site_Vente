@@ -24,30 +24,33 @@ class ModelLignePanier
     }
 
 
-    public static function truc(){
-
-        if (!isset($_SESSION['panier2'])) {
-            $_SESSION['panier2'] = [];
+    public static function addLignePanier($idProduit){
+        if (!isset($_SESSION['panierSiteDeVente'])) {
+            $_SESSION['panierSiteDeVente'] = [];
         }
-        $panier = $_SESSION['panier2'];
-        $id_p = $_GET['param'];
-        $action = $_GET['action'];
-// verifie si le produit n'est pas dans le panier
-        if (!isset($panier[$id_p])) {
+        $panier = $_SESSION['panierSiteDeVente'];
+        $id_p = $idProduit;
+        // verifie si le produit n'est pas dans le panier
+        if (!isset($panier[$id_p]))
             $panier[$id_p] = ['qte' => 1];
+        else
+            $panier[$id_p]['qte']++;
 
-        }else{
-            if ($action=='add')
-                $panier[$id_p]['qte']++;
-            if ($action=='remove'){
-                $panier[$id_p]['qte']--;
-            }
-        }
-
-        $_SESSION['panier2'] = $panier;
+        $_SESSION['panierSiteDeVente'] = $panier;
         header('Location:index.php');
+    }
 
-        var_dump($panier);
+    public static function removeLignePanier($idProduit) {
+        $panier = $_SESSION['panierSiteDeVente'];
+        $id_p = $idProduit;
+
+        if ($panier[$id_p]['qte'] > 1)
+            $panier[$id_p]['qte']--;
+        else
+            unset($panier[$id_p]);
+
+        $_SESSION['panierSiteDeVente'] = $panier;
+        header('Location:index.php');
     }
 
     public function getIdProduit() { return $this->idProduit; }

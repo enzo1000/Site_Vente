@@ -61,7 +61,7 @@ a {
     background-color: beige;
 }
 
-.button{
+.button {
     border-radius: 100px;
     margin: 10px 5px;
     width: 45px;
@@ -69,18 +69,25 @@ a {
     background-size: 40px;
     background-position: center;
     background-repeat: no-repeat;
-    border:none;
+    border: none;
     box-shadow: 0px 10px 10px #CECECE;
 }
-.like{
+
+.like {
     background-color: #EDE9F7;
-    background-image: url("../images/logo_coeur_non_active.png") ;
+    background-image: url("../images/logo_coeur_non_active.png");
 }
 
-.add{
+.add {
     background-color: white;
-    background-image: url("../images/logo_panier_non_active.png") ;
+    background-image: url("../images/logo_panier_non_active_add.png");
 }
+
+.remove {
+    background-color: white;
+    background-image: url("../images/logo_panier_non_active_rem.png");
+}
+
 /*
 .like:active {
 
