@@ -1,13 +1,10 @@
-<?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
-?>
 <html>
 <head>
     <title>Formulaire Connexion</title>
     <meta charset="utf-8" />
 </head>
 <body>
-<form method="POST" action="index.php?controller=ICD&action=connexion">
+<form method="POST" action="<?php echo './index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur' ?>" >
     <fieldset>
         <legend>Connexion :</legend>
         <p>

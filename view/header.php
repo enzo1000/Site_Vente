@@ -24,7 +24,7 @@
 
     <button type="button" >
         <?php
-        echo "<a href= view/formulaire/formConnexion.php>";
+        echo "<a href= ./index.php?controller=ControllerUtilisateur&action=printForm_Utilisateur&param=formConnexion>";
         echo "Connexion";
         echo "</a>";
         ?>
