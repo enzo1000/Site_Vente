@@ -30,10 +30,26 @@
             . "<div class='description'>" . $produit->getDescription() . "</div>"
             ."<button class='like button' id='like:".$produit->getId() . "' onclick='addlike(id)';></button>"
             ."<button class='add button' id='add:".$produit->getId() . "'onclick='addtocart(id)';></button>"
-            ."</div>"
-            ."</div>";
+            ."<a href='index.php?controller=ControllerLignePanier&param=" . $produit->getId() . "&action=add_LignePanier'><button>+</button></a>"
+            . "<a href='index.php?controller=ControllerLignePanier&param=" . $produit->getId() . "&action=remove_LignePanier'><button>-</button></a>";
+
+
+
+            if (isset($_SESSION['panier2'])){
+                foreach ($_SESSION['panier2'] as $index => $produit){
+                    $qte = $produit['qte'];
+                }
+            }
+            else
+                $qte = 0;
+
+            echo "<input type='text' value=".$qte." size='1'>"
+                ."</div>"
+                ."</div>";
+
 
     }
+    var_dump($panier);
     ?>
 
 
@@ -41,8 +57,8 @@
 
 
         function addlike(id){
-        document.getElementById(id).style.backgroundColor = "#FEEBEA";
-        document.getElementById(id).style.backgroundImage = "url('view/images/logo_coeur_active.png')";
+            document.getElementById(id).style.backgroundColor = "#FEEBEA";
+            document.getElementById(id).style.backgroundImage = "url('view/images/logo_coeur_active.png')";
         }
 
         function addtocart(id){
