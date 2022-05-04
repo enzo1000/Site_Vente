@@ -29,9 +29,10 @@ class ModelUtilisateur
     }
 
     /**
-     * A partir d'un mail et d'un mdp fournit en formulaires ou dans $_SESSION,
-     * si l'utilisateur n'a pas de compte
-     *
+     * A partir d'un mail et d'un mdp fournit en formulaires ou dans $_SESSION, (suite à un passage dans inscription)
+     * si l'utilisateur n'a pas de compte alors on re-affiche le formulaire de connexion
+     * tout en proposant à l'utilisateur de créer un compte.
+     * Sinon, on ajoute les informations de l'utilisateur dans $_SESSION['Utilisateur']
      */
 
     public static function connexionUtilisateur()
@@ -64,11 +65,11 @@ class ModelUtilisateur
 
                 //On indexe dans session notre utilisateur
 
-                $_SESSION['utilisateur'] = $reponse[0];
-                $_SESSION['nom'] = $reponse[0]['nom'];
-                $_SESSION['prenom'] = $reponse[0]['prenom'];
-                $_SESSION['mail'] = $reponse[0]['mail'];
-                $_SESSION['mdp'] = $reponse[0]['mdp'];
+                $_SESSION['Utilisateur'] = $reponse[0];
+                $_SESSION['Utilisateur']['nom'] = $reponse[0]['nom'];
+                $_SESSION['Utilisateur']['prenom'] = $reponse[0]['prenom'];
+                $_SESSION['Utilisateur']['mail'] = $reponse[0]['mail'];
+                $_SESSION['Utilisateur']['mdp'] = $reponse[0]['mdp'];
 
             }
         } catch (PDOException $e) {
@@ -81,9 +82,54 @@ class ModelUtilisateur
         }
     }
 
+    /**
+     *  Suite au passage de l'utilisateur par le formulaire d'inscription,
+     * On vérifie si ses mots de passes sont valides puis que son adresses mail n'est pas déjà utilisée
+     *
+     */
+
     public static function inscriptionUtilisateur()
     {
+        if ($_POST['mdp'] != $_POST['mdp2']) {
+            require File::build_path(array("view", "formulaires", "formInscription.php"));
+            echo "<p>deux mdp non identiques, veuillez resaisir <p> <div></div> <div></div>";
+        } else {
+            $sql = "SELECT COUNT(*) FROM utilisateur WHERE mail = :mail";
+            $requete = Model::getPDO()->prepare($sql);
+            $values = array(
+                "mail" => $_POST['mail']
+            );
 
+            $requete->execute($values);
+            $reponse = $requete->fetch(PDO::FETCH_NUM);
+
+            if ($reponse[0] != 0) {
+                require File::build_path(array("view", "formulaires", "formInscription.php"));
+                echo "Ce mail a déjà été utilisée";
+
+            } else {
+                $newCompte = "INSERT INTO utilisateur(nom, prenom, mail, mdp) VALUES (:nom, :prenom, :mail, :mdp)";
+                $requete = Model::getPDO()->prepare($newCompte);
+                $values = array(
+                    "nom" => $_POST['nom'],
+                    "prenom" => $_POST['prenom'],
+                    "mail" => $_POST['mail'],
+                    "mdp" => $_POST['mdp']
+                );
+
+                $requete->execute($values);
+                echo "Bienvenue !" . $_POST['nom'] . $_POST['prenom'];
+                header("Location:index.php");
+                //echo "<a href='index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur'> cliquez ici pour se connecter</a>";
+            }
+        }
+    }
+
+    public static function deconnexion()
+    {
+        session_destroy();
+        unset($_SESSION);
+        header("Location:index.php");
     }
 
     public function getNom()

@@ -4,16 +4,20 @@
     <meta charset="utf-8" />
 </head>
 <body>
-<form method="POST" action="<?php echo '../../index.php?controller=ControllerUtilisateur&action=inscription_Utilisateur' ?>">
+<form method="POST" action="<?php echo './index.php?controller=ControllerUtilisateur&action=inscription_Utilisateur' ?>">
     <fieldset>
         <legend>Inscription :</legend>
         <p>
             <label for="mail">Mail</label> :
-            <input type="text" placeholder="joueur.gmail.com" name="mail" id="mail">
+            <input type="text" placeholder="utilisateur.gmail.com" name="mail" id="mail">
         </p>
         <p>
-            <label for="pseudo">Pseudo</label> :
-            <input type="text" placeholder="joueur" name="pseudo" id="pseudo" required/>
+            <label for="nom">Nom</label> :
+            <input type="text" placeholder="nom utilisateur" name="nom" id="nom" required/>
+        </p>
+        <p>
+            <label for="prenom">Prénom</label> :
+            <input type="text" placeholder="prénom utilisateur" name="prenom" id="prenom" required/>
         </p>
         <p>
             <label for="mdp">Mot de passe</label> :

@@ -9,7 +9,7 @@
         <legend>Connexion :</legend>
         <p>
             <label for="mail">Mail</label> :
-            <input type="text" placeholder="joueur.gmail.com" name="mail" id="mail" required>
+            <input type="text" placeholder="utilisateur.gmail.com" name="mail" id="mail" required>
         </p>
         <p>
             <label for="mdp">Mot de passe</label> :
