@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="view/CSS/index.css">
 </head>
+
+<?php require_once File::build_path(array("view", "header.php")); ?>
+
 <body>
 
 <div class="liste">
