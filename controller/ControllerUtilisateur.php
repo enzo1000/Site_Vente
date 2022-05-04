@@ -15,4 +15,9 @@ class ControllerUtilisateur {
         require_once File::build_path(array("view", "single.php"));
     }
 
+    public static function connexion_Utilisateur() {
+        require_once File::build_path(array("model","ModelJoueur.php"));
+
+        require_once File::build_path(array("view","all.php"));
+    }
 }

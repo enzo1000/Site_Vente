@@ -22,6 +22,14 @@
     ?>
     </button>
 
+    <button type="button" >
+        <?php
+        echo "<a href= view/formulaire/formConnexion.php>";
+        echo "Connexion";
+        echo "</a>";
+        ?>
+    </button>
+
 </div>
 </body>
 </html>
