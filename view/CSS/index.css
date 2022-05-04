@@ -76,6 +76,11 @@ a {
     background-color: #EDE9F7;
     background-image: url("../images/logo_coeur_non_active.png") ;
 }
+
+.add{
+    background-color: white;
+    background-image: url("../images/logo_panier_non_active.png") ;
+}
 /*
 .like:active {
 
