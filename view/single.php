@@ -32,6 +32,12 @@ echo "<div class='article'"
      . "<div class='description'>" . $produit->getDescription() . "</div>"
      . "</div>"
      . "</div>";
+
+echo "<div class='article'"
+    . "<div class='container'>"
+    . "<div> <a href='./index.php'><button> Retour </button></a></div>"
+    . "</div>"
+    . "</div>";
 ?>
 
 </div>

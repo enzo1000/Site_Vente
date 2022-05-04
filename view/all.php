@@ -28,14 +28,14 @@
 
             . "<a href='index.php?controller=ControllerLignePanier&action=add_LignePanier&param=" . $produit->getId() . "'>"
             . "<button class='add button' id='add:" . $produit->getId() . "'onclick='addJS(id)'></button>"
-            . "</a>"
-
-            . "<a href='index.php?controller=ControllerLignePanier&action=remove_LignePanier&param=" . $produit->getId() . "'>"
-            . "<button class='remove button' id='remove:" . $produit->getId() . "'onclick='removeJS(id)'></button>"
             . "</a>";
 
+
         if (isset($_SESSION['panierSiteDeVente'][$produit->getId()]))
-            echo $_SESSION['panierSiteDeVente'][$produit->getId()]['qte'];
+            echo "<a href='index.php?controller=ControllerLignePanier&action=remove_LignePanier&param=" . $produit->getId() . "'>"
+                . "<button class='remove button' id='remove:" . $produit->getId() . "'onclick='removeJS(id)'></button>"
+                . "</a>"
+                . $_SESSION['panierSiteDeVente'][$produit->getId()]['qte'];
 
         echo "</div>"
             . "</div>";
