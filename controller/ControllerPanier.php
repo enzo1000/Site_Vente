@@ -6,10 +6,11 @@ class ControllerPanier
     {
         require_once File::build_path(array("model", "ModelPanier.php"));
         ModelPanier::getPanier($idUtilisateur);
+        require_once File::build_path(array("view", "panier.php"));
     }
 
-    public static function test()
+    public static function panier_Panier()
     {
-        header("Location:./view/panier.php");
+        header("Location:./index.php?controller=ControllerPanier&action=get_Panier");
     }
 }

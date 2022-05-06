@@ -22,7 +22,7 @@
 <div class='header'>
     <button type="button">
         <?php
-        echo "<a href= ./index.php?controller=ControllerPanier&action=test>";
+        echo "<a href= ./index.php?controller=ControllerPanier&action=panier_Panier&param=>";
         echo "Panier Piano";
         echo "</a>";
         ?>

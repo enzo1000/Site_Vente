@@ -64,13 +64,19 @@ class ModelUtilisateur
             } else {
 
                 //On indexe dans session notre utilisateur
-
                 $_SESSION['ModelUtilisateur']['nom'] = $reponse[0]->getNom();
                 $_SESSION['ModelUtilisateur']['prenom'] = $reponse[0]->getPrenom();
                 $_SESSION['ModelUtilisateur']['mail'] = $reponse[0]->getMail();
                 $_SESSION['ModelUtilisateur']['mdp'] = $reponse[0]->getMdp();
 
-                header("Location:index.php");
+                require_once File::build_path(array("model", "ModelPanier.php"));
+
+                $idPanier = ModelPanier::creerPanierUtilisateur();
+
+                if(isset($_SESSION['panierSiteDeVente']))
+                    self::copiePanierUtilisateur($idPanier);
+
+               //TODO dé commenter header("Location:index.php");
             }
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
@@ -120,6 +126,38 @@ class ModelUtilisateur
                 $requete->execute($values);
                 echo "Bienvenue !" . $_POST['nom'] . $_POST['prenom'];
                 header("Location:index.php");
+            }
+        }
+    }
+
+    /**
+     * Pour chacun des éléments dans panierSiteDeVente, on vient vérifier si le produit est déjà présent sur la base de donnée.
+     * Si le produit est présent dans le panier de l'utilisateur alors :
+     * On le ré-écrit pour correspondre à la Session (à débattre)
+     * Sinon :
+     * On vient créer une ligne pour ledit produit.
+     */
+    public static function copiePanierUtilisateur($idPanier)
+    {
+        foreach ($_SESSION['panierSiteDeVente'] as $cle => $idProduit) {
+            $nbProduit = "SELECT qte FROM LignePanier l JOIN Panier p ON l.idPanier = p.idPanier " .
+                   " WHERE idUtilisateur = :idUtilisateur && idProduit = :idProduit";
+            $req = Model::getPDO()->prepare($nbProduit);
+
+            $array = array(
+                "idUtilisateur" => $_SESSION['ModelUtilisateur']['mail'],
+                "idProduit" => $idProduit
+            );
+
+            $req->execute($array);
+            $reponse = $req->fetch(PDO::FETCH_NUM);
+
+            if ($reponse == 0) {
+                //On créer une ligne
+                echo "On a pas de ligne pour " . $idProduit;
+            } else {
+                //On ajoute à la ligne ou on réécrit ?
+                echo "On a une ligne pour " . $idProduit;
             }
         }
     }
