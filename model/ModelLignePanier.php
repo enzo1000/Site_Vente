@@ -1,4 +1,5 @@
 <?php
+
 class ModelLignePanier
 {
     private $idProduit;
@@ -10,8 +11,9 @@ class ModelLignePanier
      * à partir d'un idPanier fournit en paramètre
      */
 
-    public static function getAllProduitsPanier($idPanier) {
-        $req = Model::getPDO()->prepare( "SELECT idProduit, qte FROM lignePanier WHERE idPanier = :idPanier");
+    public static function getAllProduitsPanier($idPanier)
+    {
+        $req = Model::getPDO()->prepare("SELECT idProduit, qte FROM lignePanier WHERE idPanier = :idPanier");
         $array = array(
             "idPanier" => $idPanier,
         );
@@ -21,7 +23,8 @@ class ModelLignePanier
     }
 
 
-    public static function addLignePanier($idProduit){
+    public static function addLignePanier($idProduit)
+    {
         if (!isset($_SESSION['panierSiteDeVente'])) {
             $_SESSION['panierSiteDeVente'] = [];
         }
@@ -37,7 +40,8 @@ class ModelLignePanier
         header('Location:index.php');
     }
 
-    public static function removeLignePanier($idProduit) {
+    public static function removeLignePanier($idProduit)
+    {
         $panier = $_SESSION['panierSiteDeVente'];
         $id_p = $idProduit;
 
@@ -50,13 +54,14 @@ class ModelLignePanier
         header('Location:index.php');
     }
 
-    /**
+    /*
      * Pour chacun des éléments dans panierSiteDeVente, on vient vérifier si le produit est déjà présent sur la base de donnée.
      * Si le produit est présent dans le panier de l'utilisateur alors :
      * On réécrit la session pour correspondre à la Bdd. (BDD > $_SESSION)
      * Sinon :
      * On vient créer une ligne pour ledit produit dans la bdd.
-     */
+    */
+    /*
     public static function copiePanierLignePanier()
     {
         $idPanier = $_SESSION['idPanier'];
@@ -78,7 +83,6 @@ class ModelLignePanier
                 $req = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :qte);";
                 $reponse = $_SESSION['panierSiteDeVente'][$idProduit]['qte'];
             } else {
-                //TODO : Session ou BDD prioritaire ?
                 $req = "UPDATE LignePanier SET qte = :qte "
                     . " WHERE idPanier = :idPanier AND idProduit = :idProduit";
                 $reponse = intval($reponse[0][0]);  //Ici BDD sinon voir $_SESSION ligne 83
@@ -93,21 +97,71 @@ class ModelLignePanier
             );
             $prep->execute($array);
         }
-    }
+    }*/
 
     /**
      * On vient récupérer tous les articles correspondant à $_SESSION['idPanier'] et
      * pour chacun d'eux, on vient vérifier s'ils sont présents dans $_SESSION['panierSiteDeVente'].
      * Dans le cas où ils n'y seraient pas, on les ajoutes à $_SESSION.
-     * Si ils y sont déjà, on garde l'article inchangé ($_SESSIONS > BDD) et on vient l'ajouter à la BDD.
+     * S'ils y sont déjà, on garde l'article inchangé ($_SESSIONS > BDD) et on change l'article de la BDD.
      */
 
-    public static function copiePanierBddLignePanier() {
+    public static function copiePanierBddLignePanier()
+    {
+        $listeArticle = "SELECT * FROM LignePanier WHERE idPanier =" . $_SESSION['idPanier'] . ";";
+        $req = Model::getPDO()->query($listeArticle);
+        $req->setFetchMode(PDO::FETCH_CLASS, 'ModelLignePanier');
+        $rep = $req->fetchAll();
 
-        //header("Location:index.php");
+        if ($rep != false) {
+            foreach ($rep as $lignePanier => $objLigne) {                        //Pour chacune des lignes dans la bdd
+                foreach ($_SESSION['panierSiteDeVente'] as $cle => $Produit) {   //Pour chacune des lignes dans $_SESSION['panierSiteDeVente'];
+                    if ($objLigne->getIdProduit() == $cle) {                     //Si on a des idProduit similaires sur la bdd et la $_SESSION
+                        $presence = $cle;
+                    }
+                }
+                if (!isset($presence)) {                                         //Il n'y a pas d'objet correspond à la BDD dans la $_SESSION
+                    $_SESSION['panierSiteDeVente'][$objLigne->getIdProduit()]['qte'] = $objLigne->getQte(); //On l'ajoute alors à la $_SESSION
+                } else {                                                         //Il y a un même produit entre la BDD et la $_SESSION
+                    $update = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit";   //On vient réécrire la BDD
+                    $req = Model::getPDO()->prepare($update);
+
+                    $array = array(
+                        "idProduit" => $presence,
+                        "idPanier" => $_SESSION['idPanier'],
+                        "qte" => $_SESSION['panierSiteDeVente'][$presence]['qte'],
+                    );
+                    $req->execute($array);
+                    unset($presence);
+                }
+            }
+        } else {
+            foreach ($_SESSION['panierSiteDeVente'] as $cle => $Produit) {                      //Pour chacune des lignes dans $_SESSION['panierSiteDeVente'];
+                $insert = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :qte);";      //Vu qu'il n'y a rien dans la BDD, on vient y insérer la $_SESSION
+                $req = Model::getPDO()->prepare($insert);
+                $array = array(
+                    "idProduit" => $cle,
+                    "idPanier" => intval($_SESSION['idPanier']),
+                    "qte" => $_SESSION['panierSiteDeVente'][$cle]['qte'],
+                );
+                $req->execute($array);
+            }
+        }
+        header("Location:index.php");
     }
 
-    public function getIdProduit() { return $this->idProduit; }
-    public function getIdPanier() { return $this->idPanier; }
-    public function getQte() { return $this->qte; }
+    public function getIdProduit()
+    {
+        return $this->idProduit;
+    }
+
+    public function getIdPanier()
+    {
+        return $this->idPanier;
+    }
+
+    public function getQte()
+    {
+        return $this->qte;
+    }
 }

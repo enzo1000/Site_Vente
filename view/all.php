@@ -60,8 +60,5 @@
         document.getElementById(id).style.backgroundImage = "url('view/images/logo_panier_active_rem.png')";
     }
 </script>
-
-
 </body>
-
 </html>
