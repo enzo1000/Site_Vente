@@ -22,10 +22,11 @@ class ModelPanier
     /**
      * On vient vérifier si l'utilisateur a un panier sur la base de donnée
      *  de manière à pouvoir lui en créer un dans le cas échéant où il n'en aurait pas.
+     * On vient ensuite copier dans copier l'idPanier dans $_SESSION['idPanier'];
      * Note : On peut réaliser la méthode si dessous sans passer par du récursif.
      * Si le récursif est alors trop gourmand, il faudra favoriser cette option
      */
-    public static function creerPanierUtilisateur()
+    public static function creerPanier()
     {
         $panierExiste = "SELECT * FROM Panier ORDER BY idPanier"; //On récup tout les paniers
         $req = Model::getPDO()->query($panierExiste);
@@ -51,7 +52,7 @@ class ModelPanier
             );
             $req->execute($array);
 
-            return $idPanier;
+            $_SESSION['idPanier'] = $idPanier;
         } else {    //L'utilisateur a alors un panier
 
             $idPanier = "SELECT idPanier FROM Panier WHERE idUtilisateur = :idUtilisateur";
@@ -65,7 +66,9 @@ class ModelPanier
             $req->fetch(PDO::FETCH_CLASS, 'ModelPanier');
             $res = $req->fetchAll();
 
-            return $res[0]['idPanier'];
+            $_SESSION['idPanier'] = $res[0]['idPanier'];
         }
+
+        header("Location:index.php?controller=ControllerLignePanier&action=copiePanierBdd_LignePanier");
     }
 }

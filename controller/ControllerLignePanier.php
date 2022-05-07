@@ -22,5 +22,9 @@ class ControllerLignePanier
         ModelLignePanier::removeLignePanier($idProduit);
     }
 
-
+    public static function copiePanierBdd_LignePanier()
+    {
+        require_once File::build_path(array("model", "ModelLignePanier.php"));
+        ModelLignePanier::copiePanierBddLignePanier();
+    }
 }

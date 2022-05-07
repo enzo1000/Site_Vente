@@ -23,7 +23,10 @@
     <button type="button">
         <?php
         echo "<a href= ./index.php?controller=ControllerPanier&action=panier_Panier&param=>";
-        echo "Panier Piano";
+        echo "Panier";
+        if (isset($_SESSION['idPanier'])) {
+
+        }
         echo "</a>";
         ?>
     </button>

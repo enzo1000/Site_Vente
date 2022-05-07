@@ -1,7 +1,4 @@
 <?php
-
-
-
 class ModelLignePanier
 {
     private $idProduit;
@@ -56,14 +53,13 @@ class ModelLignePanier
     /**
      * Pour chacun des éléments dans panierSiteDeVente, on vient vérifier si le produit est déjà présent sur la base de donnée.
      * Si le produit est présent dans le panier de l'utilisateur alors :
-     * On le ré-écrit pour correspondre à la Session (à débattre)
+     * On réécrit la session pour correspondre à la Bdd. (BDD > $_SESSION)
      * Sinon :
-     * On vient créer une ligne pour ledit produit.
-     * <!> Seulement dans le cas où la BDD prime
-     * Pour chaque article dans la BDD, on vient prendre leur valeur dans la $_Session
+     * On vient créer une ligne pour ledit produit dans la bdd.
      */
-    public static function copiePanierUtilisateur($idPanier)
+    public static function copiePanierLignePanier()
     {
+        $idPanier = $_SESSION['idPanier'];
         foreach ($_SESSION['panierSiteDeVente'] as $idProduit => $array) {
             $nbProduit = "SELECT qte FROM LignePanier l " .
                 " WHERE idPanier = :idPanier && idProduit = :idProduit";
@@ -78,8 +74,6 @@ class ModelLignePanier
             $req->setFetchMode(PDO::FETCH_CLASS, 'ModelLignePanier[qte]');
             $reponse = $req->fetchAll();
 
-            echo "<pre>";
-
             if ($reponse == false) {
                 $req = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :qte);";
                 $reponse = $_SESSION['panierSiteDeVente'][$idProduit]['qte'];
@@ -90,6 +84,7 @@ class ModelLignePanier
                 $reponse = intval($reponse[0][0]);  //Ici BDD sinon voir $_SESSION ligne 83
                 $_SESSION['panierSiteDeVente'][$idProduit]['qte'] = $reponse;
             }
+
             $prep = Model::getPDO()->prepare($req);
             $array = array(
                 "idPanier" => $idPanier,
@@ -98,6 +93,18 @@ class ModelLignePanier
             );
             $prep->execute($array);
         }
+    }
+
+    /**
+     * On vient récupérer tous les articles correspondant à $_SESSION['idPanier'] et
+     * pour chacun d'eux, on vient vérifier s'ils sont présents dans $_SESSION['panierSiteDeVente'].
+     * Dans le cas où ils n'y seraient pas, on les ajoutes à $_SESSION.
+     * Si ils y sont déjà, on garde l'article inchangé ($_SESSIONS > BDD) et on vient l'ajouter à la BDD.
+     */
+
+    public static function copiePanierBddLignePanier() {
+
+        //header("Location:index.php");
     }
 
     public function getIdProduit() { return $this->idProduit; }

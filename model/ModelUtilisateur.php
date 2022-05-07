@@ -1,7 +1,4 @@
 <?php
-
-include_once File::build_path(array("model", "Model.php"));
-
 class ModelUtilisateur
 {
     private $nom;
@@ -69,16 +66,7 @@ class ModelUtilisateur
                 $_SESSION['ModelUtilisateur']['mail'] = $reponse[0]->getMail();
                 $_SESSION['ModelUtilisateur']['mdp'] = $reponse[0]->getMdp();
 
-                require_once File::build_path(array("model", "ModelPanier.php"));
-
-                $idPanier = ModelPanier::creerPanierUtilisateur();
-
-                if (isset($_SESSION['panierSiteDeVente'])) {
-                    require_once File::build_path(array("model", "ModelLignePanier.php"));
-                    ModelLignePanier::copiePanierUtilisateur($idPanier);
-                }
-
-                //TODO dé commenter header("Location:index.php");
+                header("Location:./index.php?controller=ControllerPanier&action=creer_Panier");
             }
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
