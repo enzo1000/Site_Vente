@@ -73,10 +73,12 @@ class ModelUtilisateur
 
                 $idPanier = ModelPanier::creerPanierUtilisateur();
 
-                if(isset($_SESSION['panierSiteDeVente']))
-                    self::copiePanierUtilisateur($idPanier);
+                if (isset($_SESSION['panierSiteDeVente'])) {
+                    require_once File::build_path(array("model", "ModelLignePanier.php"));
+                    ModelLignePanier::copiePanierUtilisateur($idPanier);
+                }
 
-               //TODO dé commenter header("Location:index.php");
+                //TODO dé commenter header("Location:index.php");
             }
         } catch (PDOException $e) {
             if (Conf::getDebug()) {
@@ -91,9 +93,7 @@ class ModelUtilisateur
     /**
      *  Suite au passage de l'utilisateur par le formulaire d'inscription,
      * On vérifie si ses mots de passes sont valides puis que son adresses mail n'est pas déjà utilisée
-     *
      */
-
     public static function inscriptionUtilisateur()
     {
         if ($_POST['mdp'] != $_POST['mdp2']) {
@@ -114,7 +114,7 @@ class ModelUtilisateur
                 echo "Ce mail a déjà été utilisée";
 
             } else {
-                $newCompte = "INSERT INTO utilisateur(nom, prenom, mail, mdp) VALUES (:nom, :prenom, :mail, :mdp)";
+                $newCompte = "INSERT INTO utilisateur VALUES (:nom, :prenom, :mail, :mdp)";
                 $requete = Model::getPDO()->prepare($newCompte);
                 $values = array(
                     "nom" => $_POST['nom'],
@@ -126,38 +126,6 @@ class ModelUtilisateur
                 $requete->execute($values);
                 echo "Bienvenue !" . $_POST['nom'] . $_POST['prenom'];
                 header("Location:index.php");
-            }
-        }
-    }
-
-    /**
-     * Pour chacun des éléments dans panierSiteDeVente, on vient vérifier si le produit est déjà présent sur la base de donnée.
-     * Si le produit est présent dans le panier de l'utilisateur alors :
-     * On le ré-écrit pour correspondre à la Session (à débattre)
-     * Sinon :
-     * On vient créer une ligne pour ledit produit.
-     */
-    public static function copiePanierUtilisateur($idPanier)
-    {
-        foreach ($_SESSION['panierSiteDeVente'] as $cle => $idProduit) {
-            $nbProduit = "SELECT qte FROM LignePanier l JOIN Panier p ON l.idPanier = p.idPanier " .
-                   " WHERE idUtilisateur = :idUtilisateur && idProduit = :idProduit";
-            $req = Model::getPDO()->prepare($nbProduit);
-
-            $array = array(
-                "idUtilisateur" => $_SESSION['ModelUtilisateur']['mail'],
-                "idProduit" => $idProduit
-            );
-
-            $req->execute($array);
-            $reponse = $req->fetch(PDO::FETCH_NUM);
-
-            if ($reponse == 0) {
-                //On créer une ligne
-                echo "On a pas de ligne pour " . $idProduit;
-            } else {
-                //On ajoute à la ligne ou on réécrit ?
-                echo "On a une ligne pour " . $idProduit;
             }
         }
     }
