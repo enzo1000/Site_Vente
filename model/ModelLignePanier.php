@@ -19,7 +19,8 @@ class ModelLignePanier
         );
         $req->execute($array);
         $req->setFetchMode(PDO::FETCH_CLASS, 'ModelLignePanier');
-        return $req->fetchAll();
+        $tab_lp = $req->fetchAll();
+        return $tab_lp;
     }
 
     public static function addLignePanier($idProduit)

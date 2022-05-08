@@ -20,19 +20,14 @@
 <body>
 
 <div class='header'>
-    <button type="button">
-        <?php
-        echo "<a href= ./index.php?controller=ControllerPanier&action=panier_Panier&param=>";
-        echo "Panier";
-        if (isset($_SESSION['idPanier'])) {
-
-        }
-        echo "</a>";
-        ?>
-    </button>
-
     <?php
     if (isset($_SESSION['panierSiteDeVente'])) {
+        echo "<button type='button'>";
+        echo "<a href= ./index.php?controller=ControllerLignePanier&action=afficherPanier_LignePanier>";
+        echo "Panier";
+        echo "</a>";
+        echo "</button>";
+
         $total = 0;
         foreach ($_SESSION['panierSiteDeVente'] as $produit => $item) {
             $total += $_SESSION['panierSiteDeVente'][$produit]['qte'];
@@ -41,22 +36,17 @@
         echo $total;
         echo "</button>";
     }
-    ?>
 
-    <?php
+    echo "<button type='button' >";
     if (!isset($_SESSION['ModelUtilisateur'])) {
-        echo "<button type='button' >";
         echo "<a href= ./index.php?controller=ControllerUtilisateur&action=printForm_Utilisateur&param=formConnexion>";
         echo "Connexion";
-        echo "</a>";
-        echo "</button>";
     } else {
-        echo "<button type='button' >";
         echo "<a href= ./index.php?controller=ControllerUtilisateur&action=deconnexion_Utilisateur>";
         echo "Deconnexion";
-        echo "</a>";
-        echo "</button>";
     }
+    echo "</a>";
+    echo "</button>";
     ?>
 
 </div>

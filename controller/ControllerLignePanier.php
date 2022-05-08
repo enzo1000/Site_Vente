@@ -27,4 +27,9 @@ class ControllerLignePanier
         require_once File::build_path(array("model", "ModelLignePanier.php"));
         ModelLignePanier::copiePanierBddLignePanier();
     }
+
+    public static function afficherPanier_LignePanier()
+    {
+        require_once File::build_path(array("view", "lignePanier.php"));
+    }
 }
