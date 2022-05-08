@@ -8,11 +8,11 @@
 
 <?php require_once File::build_path(array("view", "header.php")); ?>
 
+
 <div class='liste'>
 
     <?php
     foreach ($tab_p as $produit) {
-
         echo "<div class='article'>"
             . "<div class='container'>"
             . "<div class='image'>"
@@ -29,7 +29,6 @@
             . "<a href='index.php?controller=ControllerLignePanier&action=add_LignePanier&param=" . $produit->getId() . "'>"
             . "<button class='add button' id='add:" . $produit->getId() . "'onclick='addJS(id)'></button>"
             . "</a>";
-
 
         if (isset($_SESSION['panierSiteDeVente'][$produit->getId()]))
             echo "<a href='index.php?controller=ControllerLignePanier&action=remove_LignePanier&param=" . $produit->getId() . "'>"

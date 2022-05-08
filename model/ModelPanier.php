@@ -25,6 +25,8 @@ class ModelPanier
      * On vient ensuite copier dans copier l'idPanier dans $_SESSION['idPanier'];
      * Note : On peut réaliser la méthode si dessous sans passer par du récursif.
      * Si le récursif est alors trop gourmand, il faudra favoriser cette option
+     *
+     * Retourne un $_SESSION['idPanier'] contenant l'idPanier sur la BDD.
      */
     public static function creerPanier()
     {

@@ -16,7 +16,7 @@ class ControllerProduit
     public static function read_Produit($idProduit)
     {
         require_once File::build_path(array("model", "ModelProduit.php"));
-        $produit = ModelProduit::getProduit($idProduit);
+        $produitSingle = ModelProduit::getProduit($idProduit);
         require_once File::build_path(array("view", "single.php"));
     }
 

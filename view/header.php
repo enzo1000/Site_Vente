@@ -12,7 +12,7 @@
         .header {
             height: 90px;
             margin: 0;
-            background: #000000;
+            background: white;
         }
     </style>
 
@@ -30,6 +30,18 @@
         echo "</a>";
         ?>
     </button>
+
+    <?php
+    if (isset($_SESSION['panierSiteDeVente'])) {
+        $total = 0;
+        foreach ($_SESSION['panierSiteDeVente'] as $produit => $item) {
+            $total += $_SESSION['panierSiteDeVente'][$produit]['qte'];
+        }
+        echo "<button type='button'>";
+        echo $total;
+        echo "</button>";
+    }
+    ?>
 
     <?php
     if (!isset($_SESSION['ModelUtilisateur'])) {

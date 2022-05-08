@@ -22,7 +22,6 @@ class ModelLignePanier
         return $req->fetchAll();
     }
 
-
     public static function addLignePanier($idProduit)
     {
         if (!isset($_SESSION['panierSiteDeVente'])) {
@@ -31,12 +30,25 @@ class ModelLignePanier
         $panier = $_SESSION['panierSiteDeVente'];
         $id_p = $idProduit;
         // verifie si le produit n'est pas dans le panier
-        if (!isset($panier[$id_p]))
+        if (!isset($panier[$id_p])) {
             $panier[$id_p] = ['qte' => 1];
-        else
+            $sql = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :qte);";
+        } else {
             $panier[$id_p]['qte']++;
+            $sql = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
+        }
 
         $_SESSION['panierSiteDeVente'] = $panier;
+
+        if (isset($_SESSION['idPanier'])) {     //Si idPanier est défini, il faut alors modifier la base de données.
+            $array = array(
+                "qte" => $_SESSION['panierSiteDeVente'][$id_p]['qte'],
+                "idPanier" => $_SESSION['idPanier'],
+                "idProduit" => $id_p,
+            );
+            Model::getPDO()->prepare($sql)->execute($array);
+        }
+
         header('Location:index.php');
     }
 
@@ -45,14 +57,34 @@ class ModelLignePanier
         $panier = $_SESSION['panierSiteDeVente'];
         $id_p = $idProduit;
 
-        if ($panier[$id_p]['qte'] > 1)
+        if ($panier[$id_p]['qte'] > 1) {
             $panier[$id_p]['qte']--;
-        else
+
+            if (isset($_SESSION['idPanier'])) {
+                $sql = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
+                $array = array(
+                    "qte" => $panier[$id_p]['qte'],
+                    "idPanier" => $_SESSION['idPanier'],
+                    "idProduit" => $id_p,
+                );
+            }
+        } else {
             unset($panier[$id_p]);
 
+            $sql = "DELETE FROM LignePanier WHERE idProduit = :id_p;";
+            $array = array("id_p" => $id_p);
+        }
+
         $_SESSION['panierSiteDeVente'] = $panier;
+
+        if (isset($_SESSION['idPanier'])) {
+            Model::getPDO()->prepare($sql)->execute($array);
+        }
+
         header('Location:index.php');
     }
+
+
 
     /*
      * Pour chacun des éléments dans panierSiteDeVente, on vient vérifier si le produit est déjà présent sur la base de donnée.
@@ -100,10 +132,12 @@ class ModelLignePanier
     }*/
 
     /**
-     * On vient récupérer tous les articles correspondant à $_SESSION['idPanier'] et
+     * On vient récupérer tous les articles correspondant à $_SESSION['idPanier'] sur la bdd et
      * pour chacun d'eux, on vient vérifier s'ils sont présents dans $_SESSION['panierSiteDeVente'].
      * Dans le cas où ils n'y seraient pas, on les ajoutes à $_SESSION.
      * S'ils y sont déjà, on garde l'article inchangé ($_SESSIONS > BDD) et on change l'article de la BDD.
+     *
+     * Retourne un panier synchronisé avec la base de donnée en respectant la priorité de la session sur cette dernière.
      */
 
     public static function copiePanierBddLignePanier()
