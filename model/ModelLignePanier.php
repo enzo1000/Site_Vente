@@ -13,12 +13,13 @@ class ModelLignePanier
 
     public static function getAllProduitsPanier($idPanier)
     {
-        $req = Model::getPDO()->prepare("SELECT idProduit, qte FROM lignePanier WHERE idPanier = :idPanier");
+        $req = Model::getPDO()->prepare("SELECT id, nom, prix, description, photo, nomCategorie, qte 
+            FROM lignePanier lp JOIN Produits p ON idProduit = id WHERE idPanier = :idPanier");
         $array = array(
             "idPanier" => $idPanier,
         );
         $req->execute($array);
-        $req->setFetchMode(PDO::FETCH_CLASS, 'ModelLignePanier');
+        $req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
         $tab_lp = $req->fetchAll();
         return $tab_lp;
     }

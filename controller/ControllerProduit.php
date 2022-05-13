@@ -20,7 +20,22 @@ class ControllerProduit
         require_once File::build_path(array("view", "single.php"));
     }
 
-    public static function home() {
+    public static function modal_Produit()
+    {
+        require_once File::build_path(array("model", "ModelProduit.php"));
+        $tab_p = ModelProduit::getAllProduits();
+        echo '<div id="modal" class="modal">
+                <div class="modal - header">
+                    Veuillez vous connecter pour voir le Panier
+                </div>
+            <div class="modal-content">
+            </div>';
+        require_once File::build_path(array("view", "all.php"));
+
+    }
+
+    public static function home()
+    {
         header("Location:./index.php?controller=ControllerProduit&action=readAll_Produit");
     }
 }

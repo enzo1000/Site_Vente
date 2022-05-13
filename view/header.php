@@ -23,9 +23,15 @@
     <?php
     if (isset($_SESSION['panierSiteDeVente'])) {
         echo "<button type='button'>";
-        echo "<a href= ./index.php?controller=ControllerLignePanier&action=afficherPanier_LignePanier>";
-        echo "Panier";
-        echo "</a>";
+        if (isset($_SESSION['idPanier'])) {
+            echo "<a href= ./index.php?controller=ControllerLignePanier&action=afficherPanier_LignePanier>";
+            echo "Panier";
+            echo "</a>";
+        } else {
+            echo "<a href= ./index.php?controller=ControllerProduit&action=modal_Produit>";
+            echo "Panier";
+            echo "</a>";
+        }
         echo "</button>";
 
         $total = 0;

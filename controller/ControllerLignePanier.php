@@ -30,6 +30,8 @@ class ControllerLignePanier
 
     public static function afficherPanier_LignePanier()
     {
+        require_once File::build_path(array("model", "ModelLignePanier.php"));
+        $tabProduit = ModelLignePanier::getAllProduitsPanier($_SESSION['idPanier']);
         require_once File::build_path(array("view", "lignePanier.php"));
     }
 }
