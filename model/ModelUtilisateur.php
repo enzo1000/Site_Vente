@@ -112,8 +112,7 @@ class ModelUtilisateur
                 );
 
                 $requete->execute($values);
-                echo "Bienvenue !" . $_POST['nom'] . $_POST['prenom'];
-                header("Location:index.php");
+                header("Location:./index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur");
             }
         }
     }

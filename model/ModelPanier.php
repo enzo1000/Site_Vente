@@ -36,7 +36,6 @@ class ModelPanier
         $res = $req->fetchAll();
 
         if (!File::in_array_r($_SESSION['ModelUtilisateur']['mail'], $res)) {   //Si l'utilisateur n'en a pas
-
             for ($i = 0; $i < sizeof($res) && !isset($idPanier); $i++) {  //On cherche une place dans les idPanier dans la base
                 if ($i != $res[$i]["idPanier"]) {    //S'il y a une place alors on créer un panier ici
                     $idPanier = $i;

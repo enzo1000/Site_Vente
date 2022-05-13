@@ -37,16 +37,24 @@
         echo "</button>";
     }
 
-    echo "<button type='button' >";
     if (!isset($_SESSION['ModelUtilisateur'])) {
+        echo "<button type='button' >";
         echo "<a href= ./index.php?controller=ControllerUtilisateur&action=printForm_Utilisateur&param=formConnexion>";
         echo "Connexion";
+        echo "</a>";
+        echo "</button>";
+        echo "<button type='button' >";
+        echo "<a href= ./index.php?controller=ControllerUtilisateur&action=printForm_Utilisateur&param=formInscription>";
+        echo "Inscription";
+        echo "</a>";
+        echo "</button>";
     } else {
+        echo "<button type='button' >";
         echo "<a href= ./index.php?controller=ControllerUtilisateur&action=deconnexion_Utilisateur>";
         echo "Deconnexion";
+        echo "</a>";
+        echo "</button>";
     }
-    echo "</a>";
-    echo "</button>";
     ?>
 
 </div>
