@@ -111,8 +111,13 @@ class ModelUtilisateur
                     "mdp" => $_POST['mdp']
                 );
 
+                $_SESSION['ModelUtilisateur']['nom'] = $_POST['nom'];
+                $_SESSION['ModelUtilisateur']['prenom'] = $_POST['prenom'];
+                $_SESSION['ModelUtilisateur']['mail'] = $_POST['mail'];
+                $_SESSION['ModelUtilisateur']['mdp'] = $_POST['mdp'];
+
                 $requete->execute($values);
-                header("Location:./index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur");
+                header("Location:./index.php");
             }
         }
     }
