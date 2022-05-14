@@ -20,8 +20,7 @@ class ModelLignePanier
         );
         $req->execute($array);
         $req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
-        $tab_lp = $req->fetchAll();
-        return $tab_lp;
+        return $req->fetchAll();
     }
 
     public static function addLignePanier($idProduit)
@@ -33,21 +32,31 @@ class ModelLignePanier
         $id_p = $idProduit;
         // verifie si le produit n'est pas dans le panier
         if (!isset($panier[$id_p])) {
-            $panier[$id_p] = ['qte' => 1];
-            $sql = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :qte);";
+            $panier[$id_p]['qte'] = 1;
+            $sql = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :idUtilisateur, :qte);";
+
+            echo "<pre>";
+            var_dump($_SESSION);
+
+            $array = array(
+                "qte" => $panier[$id_p]['qte'],
+                "idPanier" => $_SESSION['idPanier'],
+                "idUtilisateur" => $_SESSION['ModelUtilisateur']['mail'],
+                "idProduit" => $id_p,
+            );
+
         } else {
             $panier[$id_p]['qte']++;
             $sql = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
-        }
 
-        $_SESSION['panierSiteDeVente'] = $panier;
-
-        if (isset($_SESSION['idPanier'])) {     //Si idPanier est défini, il faut alors modifier la base de données.
             $array = array(
                 "qte" => $_SESSION['panierSiteDeVente'][$id_p]['qte'],
                 "idPanier" => $_SESSION['idPanier'],
                 "idProduit" => $id_p,
             );
+        }
+        $_SESSION['panierSiteDeVente'] = $panier;
+        if (isset($_SESSION['idPanier'])) {     //Si idPanier est défini, il faut alors modifier la base de données.
             Model::getPDO()->prepare($sql)->execute($array);
         }
 
@@ -144,7 +153,7 @@ class ModelLignePanier
 
     public static function copiePanierBddLignePanier()
     {
-        $listeArticle = "SELECT * FROM LignePanier WHERE idPanier =" . $_SESSION['idPanier'] . ";";
+        $listeArticle = "SELECT * FROM LignePanier WHERE idPanier =" . $_SESSION['idPanier'] . " ORDER BY idProduit;";
         $req = Model::getPDO()->query($listeArticle);
         $req->setFetchMode(PDO::FETCH_CLASS, 'ModelLignePanier');
         $rep = $req->fetchAll();
@@ -155,35 +164,50 @@ class ModelLignePanier
                     if ($objLigne->getIdProduit() == $cle) {                     //Si on a des idProduit similaires sur la bdd et la $_SESSION
                         $presence = $cle;
                     }
-                }
-                if (!isset($presence)) {                                         //Il n'y a pas d'objet correspond à la BDD dans la $_SESSION
-                    $_SESSION['panierSiteDeVente'][$objLigne->getIdProduit()]['qte'] = $objLigne->getQte(); //On l'ajoute alors à la $_SESSION
-                } else {                                                         //Il y a un même produit entre la BDD et la $_SESSION
-                    $update = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit";   //On vient réécrire la BDD
-                    $req = Model::getPDO()->prepare($update);
 
-                    $array = array(
-                        "idProduit" => $presence,
-                        "idPanier" => $_SESSION['idPanier'],
-                        "qte" => $_SESSION['panierSiteDeVente'][$presence]['qte'],
-                    );
-                    $req->execute($array);
-                    unset($presence);
+                    // faire un for classique et comparé, à partir du for, si le produit est présent sur la bdd ou la session
+                    //TODO Ou re coder ça en mode, on suppr la Session et on copie la BDD directe.
+
+                    if (!isset($presence)) {                                         //Il n'y a pas d'objet correspond à la BDD dans la $_SESSION
+                        $_SESSION['panierSiteDeVente'][$objLigne->getIdProduit()]['qte'] = $objLigne->getQte(); //On l'ajoute alors à la $_SESSION
+                    } else {                                                         //Il y a un même produit entre la BDD et la $_SESSION
+                        $update = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit";   //On vient réécrire la BDD
+                        $req = Model::getPDO()->prepare($update);
+
+                        $array = array(
+                            "idProduit" => $presence,
+                            "idPanier" => $_SESSION['idPanier'],
+                            "qte" => $_SESSION['panierSiteDeVente'][$presence]['qte'],
+                        );
+                        $req->execute($array);
+                        unset($presence);
+                    }
                 }
+
             }
         } else {
             foreach ($_SESSION['panierSiteDeVente'] as $cle => $Produit) {                      //Pour chacune des lignes dans $_SESSION['panierSiteDeVente'];
-                $insert = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :qte);";      //Vu qu'il n'y a rien dans la BDD, on vient y insérer la $_SESSION
+                $insert = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :idUtilisateur, :qte);";      //Vu qu'il n'y a rien dans la BDD, on vient y insérer la $_SESSION
                 $req = Model::getPDO()->prepare($insert);
                 $array = array(
                     "idProduit" => $cle,
                     "idPanier" => intval($_SESSION['idPanier']),
+                    "idUtilisateur" => $_SESSION['ModelUtilisateur']['mail'],
                     "qte" => $_SESSION['panierSiteDeVente'][$cle]['qte'],
                 );
                 $req->execute($array);
             }
         }
         header("Location:index.php");
+    }
+
+    public static function deleteLignePanier() {
+        $sql = "DELETE FROM lignePanier WHERE idPanier = :idPanier";
+        $prep = Model::getPDO()->prepare($sql);
+        $array = array(
+            "idPanier" => $_SESSION['idPanier'],
+        );
+        $prep->execute($array);
     }
 
     public function getIdProduit()

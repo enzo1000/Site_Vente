@@ -72,4 +72,15 @@ class ModelPanier
 
         header("Location:index.php?controller=ControllerLignePanier&action=copiePanierBdd_LignePanier");
     }
+
+    public static function deletePanier() {
+        $sql = "DELETE FROM Panier WHERE idPanier = :idPanier";
+        $prep = Model::getPDO()->prepare($sql);
+        $array = array(
+            "idPanier" => $_SESSION['idPanier'],
+        );
+        $prep->execute($array);
+        unset($_SESSION['idPanier']);
+        unset($_SESSION['panierSiteDeVente']);
+    }
 }

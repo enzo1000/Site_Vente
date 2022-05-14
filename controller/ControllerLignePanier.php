@@ -34,4 +34,11 @@ class ControllerLignePanier
         $tabProduit = ModelLignePanier::getAllProduitsPanier($_SESSION['idPanier']);
         require_once File::build_path(array("view", "lignePanier.php"));
     }
+
+    public static function delete_LignePanier()
+    {
+        require_once File::build_path(array("model", "ModelLignePanier.php"));
+        ModelLignePanier::deleteLignePanier();
+        header("Location:./index.php?controller=ControllerPanier&action=delete_Panier");
+    }
 }

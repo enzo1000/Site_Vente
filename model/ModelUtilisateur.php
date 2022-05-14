@@ -38,10 +38,10 @@ class ModelUtilisateur
             $sql = "SELECT * FROM utilisateur WHERE mail = :mail AND mdp = :mdp";
             $requete = Model::getPDO()->prepare($sql);
 
-            if (isset($_SESSION['mail']) && isset($_SESSION['mdp'])) {
+            if (isset($_SESSION['ModelUtilisateur']['mail']) && isset($_SESSION['ModelUtilisateur']['mdp'])) {
                 $values = array(
-                    "mail" => $_SESSION['mail'],
-                    "mdp" => $_SESSION['mdp'],
+                    "mail" => $_SESSION['ModelUtilisateur']['mail'],
+                    "mdp" => $_SESSION['ModelUtilisateur']['mdp'],
                 );
             } else if (isset($_POST['mail']) && isset($_POST['mdp'])) {
                 $values = array(
@@ -111,13 +111,11 @@ class ModelUtilisateur
                     "mdp" => $_POST['mdp']
                 );
 
-                $_SESSION['ModelUtilisateur']['nom'] = $_POST['nom'];
-                $_SESSION['ModelUtilisateur']['prenom'] = $_POST['prenom'];
                 $_SESSION['ModelUtilisateur']['mail'] = $_POST['mail'];
                 $_SESSION['ModelUtilisateur']['mdp'] = $_POST['mdp'];
 
                 $requete->execute($values);
-                header("Location:./index.php");
+                header("Location:./index.php?controller=ControllerUtilisateur&action=connexion_Utilisateur");
             }
         }
     }

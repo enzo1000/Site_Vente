@@ -23,6 +23,7 @@
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
     <style class="cp-pen-styles">
         h1 {
+            margin-top: 20px;
             font-size: 30px;
             color: #fff;
             text-transform: uppercase;
@@ -119,7 +120,11 @@
         }
 
         img {
-            width: 10%;
+            width: 15%;
+        }
+
+        button {
+            margin: 20px;
         }
     </style>
 </head>
@@ -179,18 +184,25 @@
         var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
         $('.tbl-header').css({'padding-right': scrollWidth});
     }).resize();
-    //# sourceURL=pen.js
 </script>
 
 <section>
     <?php
     echo "<h1>";
-        echo "<button type='button'>";
-        echo "Payer $prixFinal €";
-        echo "</button>";
+    echo "<a href='index.php?controller=ControllerCommande&action=creerCommande_Commande&param=$prixFinal'>";
+    echo "<button type='button'>";
+    echo "Payer $prixFinal €";
+    echo "</button>";
+    echo "</a>";
+
+    echo "<a href='index.php'>";
+    echo "<button type='button'>";
+    echo "Retour Articles";
+    echo "</button>";
+    echo "</a>";
+
     echo "</h1>";
     ?>
-
 </section>
 
 </body>
