@@ -47,7 +47,7 @@ class ModelLignePanier
             $sql = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
 
             $array = array(
-                "qte" => $panie[$id_p]['qte'],
+                "qte" => $panier[$id_p]['qte'],
                 "idPanier" => $_SESSION['idPanier'],
                 "idProduit" => $id_p,
             );
