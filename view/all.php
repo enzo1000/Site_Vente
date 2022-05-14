@@ -8,7 +8,7 @@
 
 <?php require_once File::build_path(array("view", "header.php")); ?>
 
-
+<div class="contenu">
 <div class='liste'>
 
     <?php
@@ -41,6 +41,7 @@
     }
     ?>
 
+</div>
 </div>
 
 <script type="text/javascript">

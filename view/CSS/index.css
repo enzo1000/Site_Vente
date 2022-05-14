@@ -1,14 +1,9 @@
-body {
-    background-color: yellow;
-}
-
 a {
     text-decoration: none;
     font-size: 250%;
 }
 
 .liste {
-    background-color: aqua;
     width: 100%;
     height: fit-content;
     display: flex;
@@ -27,10 +22,6 @@ a {
 
     border-radius: 10px;
     height: fit-content;
-}
-
-.container {
-    margin: 5%;
 }
 
 .image img {
@@ -88,11 +79,13 @@ a {
     background-image: url("../images/logo_panier_non_active_rem.png");
 }
 
-/*
-.like:active {
-
-    background-color: #FEEBEA;
-    background-image: url("../images/logo_coeur_active.png") ;
+.contenu_header {
+    display: flex;
+    justify-content: space-evenly;
+    vertical-align: center;
+    width: 100%;
 }
 
- */
+.contenu {
+    margin-top: 100px;
+}

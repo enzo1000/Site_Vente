@@ -8,7 +8,7 @@
 <?php require_once File::build_path(array("view", "header.php"));?>
 
 <body>
-
+<div class="contenu">
 <div class="liste">
 
 <?php
@@ -32,14 +32,9 @@ echo "<div class='article'"
      . "<div class='description'>" . $produitSingle->getDescription() . "</div>"
      . "</div>"
      . "</div>";
-
-echo "<div class='article'"
-    . "<div class='container'>"
-    . "<div> <a href='./index.php'><button> Retour </button></a></div>"
-    . "</div>"
-    . "</div>";
 ?>
 
+</div>
 </div>
 
 </body>
