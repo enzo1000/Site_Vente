@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 22, 2022 at 02:36 PM
+-- Generation Time: May 15, 2022 at 08:17 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -50,12 +50,60 @@ INSERT INTO `categorie` (`nom`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `commande`
+--
+
+CREATE TABLE `commande` (
+  `idCommande` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `montantTotal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `commande`
+--
+
+INSERT INTO `commande` (`idCommande`, `email`, `date`, `montantTotal`) VALUES
+(0, 'enzo111001@live.fr', '2022-05-14 17:21:36', 3079),
+(1, 'enzo111001@live.fr', '2022-05-15 06:52:40', 9000),
+(2, 'enzo111001@live.fr', '2022-05-15 08:14:03', 6019);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lignecommande`
+--
+
+CREATE TABLE `lignecommande` (
+  `idProduit` int(11) NOT NULL,
+  `idCommande` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `qte` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `lignecommande`
+--
+
+INSERT INTO `lignecommande` (`idProduit`, `idCommande`, `email`, `qte`) VALUES
+(1, 0, 'enzo111001@live.fr', 1),
+(1, 2, 'enzo111001@live.fr', 1),
+(2, 0, 'enzo111001@live.fr', 1),
+(2, 1, 'enzo111001@live.fr', 3),
+(2, 2, 'enzo111001@live.fr', 2),
+(3, 0, 'enzo111001@live.fr', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lignepanier`
 --
 
 CREATE TABLE `lignepanier` (
   `idProduit` int(11) NOT NULL,
   `idPanier` int(11) NOT NULL,
+  `idUtilisateur` varchar(100) NOT NULL,
   `qte` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -205,6 +253,13 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Dumping data for table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`nom`, `prenom`, `mail`, `mdp`) VALUES
+('Martinez', 'Enzo', 'enzo111001@live.fr', '123');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -215,11 +270,27 @@ ALTER TABLE `categorie`
   ADD PRIMARY KEY (`nom`);
 
 --
+-- Indexes for table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`idCommande`,`email`),
+  ADD KEY `emailUtilisateur` (`email`);
+
+--
+-- Indexes for table `lignecommande`
+--
+ALTER TABLE `lignecommande`
+  ADD PRIMARY KEY (`idProduit`,`idCommande`),
+  ADD KEY `idCommande` (`idCommande`),
+  ADD KEY `email` (`email`);
+
+--
 -- Indexes for table `lignepanier`
 --
 ALTER TABLE `lignepanier`
-  ADD PRIMARY KEY (`idProduit`,`idPanier`),
-  ADD KEY `pk_idPanier` (`idPanier`);
+  ADD PRIMARY KEY (`idProduit`,`idPanier`,`idUtilisateur`),
+  ADD KEY `pk_idPanier` (`idPanier`),
+  ADD KEY `idUtilisateur` (`idUtilisateur`);
 
 --
 -- Indexes for table `panier`
@@ -259,12 +330,6 @@ ALTER TABLE `utilisateur`
 --
 
 --
--- AUTO_INCREMENT for table `panier`
---
-ALTER TABLE `panier`
-  MODIFY `idPanier` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `produits`
 --
 ALTER TABLE `produits`
@@ -281,9 +346,24 @@ ALTER TABLE `tag`
 --
 
 --
+-- Constraints for table `commande`
+--
+ALTER TABLE `commande`
+  ADD CONSTRAINT `emailUtilisateur` FOREIGN KEY (`email`) REFERENCES `utilisateur` (`mail`);
+
+--
+-- Constraints for table `lignecommande`
+--
+ALTER TABLE `lignecommande`
+  ADD CONSTRAINT `email` FOREIGN KEY (`email`) REFERENCES `commande` (`email`),
+  ADD CONSTRAINT `idCommande` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`idCommande`),
+  ADD CONSTRAINT `idProduit` FOREIGN KEY (`idProduit`) REFERENCES `produits` (`id`);
+
+--
 -- Constraints for table `lignepanier`
 --
 ALTER TABLE `lignepanier`
+  ADD CONSTRAINT `idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `panier` (`idUtilisateur`),
   ADD CONSTRAINT `pk_idPanier` FOREIGN KEY (`idPanier`) REFERENCES `panier` (`idPanier`),
   ADD CONSTRAINT `pk_idProduitPanier` FOREIGN KEY (`idProduit`) REFERENCES `produits` (`id`);
 

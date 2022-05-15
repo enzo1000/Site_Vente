@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 22, 2022 at 12:13 PM
+-- Generation Time: May 15, 2022 at 08:17 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -30,6 +30,60 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categorie` (
   `nom` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commande`
+--
+
+CREATE TABLE `commande` (
+  `idCommande` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `montantTotal` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lignecommande`
+--
+
+CREATE TABLE `lignecommande` (
+  `idProduit` int(11) NOT NULL,
+  `idCommande` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `qte` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lignepanier`
+--
+
+CREATE TABLE `lignepanier` (
+  `idProduit` int(11) NOT NULL,
+  `idPanier` int(11) NOT NULL,
+  `idUtilisateur` varchar(100) NOT NULL,
+  `qte` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `panier`
+--
+
+CREATE TABLE `panier` (
+  `idPanier` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `idUtilisateur` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -69,6 +123,19 @@ CREATE TABLE `tag` (
   `libelle` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `utilisateur`
+--
+
+CREATE TABLE `utilisateur` (
+  `nom` varchar(100) NOT NULL,
+  `prenom` varchar(100) NOT NULL,
+  `mail` varchar(100) NOT NULL,
+  `mdp` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indexes for dumped tables
 --
@@ -78,6 +145,36 @@ CREATE TABLE `tag` (
 --
 ALTER TABLE `categorie`
   ADD PRIMARY KEY (`nom`);
+
+--
+-- Indexes for table `commande`
+--
+ALTER TABLE `commande`
+  ADD PRIMARY KEY (`idCommande`,`email`),
+  ADD KEY `emailUtilisateur` (`email`);
+
+--
+-- Indexes for table `lignecommande`
+--
+ALTER TABLE `lignecommande`
+  ADD PRIMARY KEY (`idProduit`,`idCommande`),
+  ADD KEY `idCommande` (`idCommande`),
+  ADD KEY `email` (`email`);
+
+--
+-- Indexes for table `lignepanier`
+--
+ALTER TABLE `lignepanier`
+  ADD PRIMARY KEY (`idProduit`,`idPanier`,`idUtilisateur`),
+  ADD KEY `pk_idPanier` (`idPanier`),
+  ADD KEY `idUtilisateur` (`idUtilisateur`);
+
+--
+-- Indexes for table `panier`
+--
+ALTER TABLE `panier`
+  ADD PRIMARY KEY (`idPanier`,`idUtilisateur`),
+  ADD KEY `pk_idUtilisateur` (`idUtilisateur`);
 
 --
 -- Indexes for table `produits`
@@ -100,6 +197,12 @@ ALTER TABLE `tag`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`mail`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -107,11 +210,45 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `produits`
 --
 ALTER TABLE `produits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `commande`
+--
+ALTER TABLE `commande`
+  ADD CONSTRAINT `emailUtilisateur` FOREIGN KEY (`email`) REFERENCES `utilisateur` (`mail`);
+
+--
+-- Constraints for table `lignecommande`
+--
+ALTER TABLE `lignecommande`
+  ADD CONSTRAINT `email` FOREIGN KEY (`email`) REFERENCES `commande` (`email`),
+  ADD CONSTRAINT `idCommande` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`idCommande`),
+  ADD CONSTRAINT `idProduit` FOREIGN KEY (`idProduit`) REFERENCES `produits` (`id`);
+
+--
+-- Constraints for table `lignepanier`
+--
+ALTER TABLE `lignepanier`
+  ADD CONSTRAINT `idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `panier` (`idUtilisateur`),
+  ADD CONSTRAINT `pk_idPanier` FOREIGN KEY (`idPanier`) REFERENCES `panier` (`idPanier`),
+  ADD CONSTRAINT `pk_idProduitPanier` FOREIGN KEY (`idProduit`) REFERENCES `produits` (`id`);
+
+--
+-- Constraints for table `panier`
+--
+ALTER TABLE `panier`
+  ADD CONSTRAINT `pk_idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateur` (`mail`);
 
 --
 -- Constraints for table `produits`
