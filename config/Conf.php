@@ -9,16 +9,16 @@ class Conf
     static private $databases = array(
         //Nom de l'hote distant (webinfo pour l'iut)
         //localhost pour le local sur machine perso
-        'hostname' => 'localhost',
+        'hostname' => 'webinfo.iutmontp.univ-montp2.fr',
 
         //Le nom de la bdd (ici progweb mais sur l'iut martineze)
-        'database' => 'sitedevente',
+        'database' => 'martineze',
 
         //A l'iut martineze, perso : root
-        'login' => 'root',
+        'login' => 'martineze',
 
         //A l'iut 7092021, perso : root
-        'password' => 'root'
+        'password' => '7092021'
     );
 
     static public function getLogin()

@@ -18,7 +18,7 @@ class ModelCommande
         $req->execute($array);
         $idCommande = $req->rowCount();
 
-        $insert = "INSERT INTO Commande (idCommande, email, montantTotal) VALUES (:idCommande, :email, :montantTotal)";
+        $insert = "INSERT INTO commande (idCommande, email, montantTotal) VALUES (:idCommande, :email, :montantTotal)";
         $prep = Model::getPDO()->prepare($insert);
         $array = array(
             "idCommande" => $idCommande,

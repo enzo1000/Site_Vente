@@ -16,10 +16,9 @@ class Model
         $dbname = Conf::getDatabase();
         $login = Conf::getLogin();
         $password = Conf::getPassword();
-        $port = 3307;
 
         try {
-            self::$pdo = new PDO("mysql:host=$hostname;port=$port;dbname=$dbname", $login, $password
+            self::$pdo = new PDO("mysql:host=$hostname;dbname=$dbname", $login, $password
                 , array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 
             self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

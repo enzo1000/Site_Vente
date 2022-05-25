@@ -14,7 +14,7 @@ class ModelLignePanier
     public static function getAllProduitsPanier($idPanier)
     {
         $req = Model::getPDO()->prepare("SELECT id, nom, prix, description, photo, nomCategorie, qte 
-            FROM lignePanier lp JOIN Produits p ON idProduit = id WHERE idPanier = :idPanier");
+            FROM lignepanier lp JOIN produits p ON idProduit = id WHERE idPanier = :idPanier");
         $array = array(
             "idPanier" => $idPanier,
         );
@@ -33,7 +33,7 @@ class ModelLignePanier
         // verifie si le produit n'est pas dans le panier
         if (!isset($panier[$id_p])) {
             $panier[$id_p]['qte'] = 1;
-            $sql = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :idUtilisateur, :qte);";
+            $sql = "INSERT INTO lignepanier VALUES (:idProduit, :idPanier, :idUtilisateur, :qte);";
 
             $array = array(
                 "qte" => $panier[$id_p]['qte'],
@@ -44,7 +44,7 @@ class ModelLignePanier
 
         } else {
             $panier[$id_p]['qte']++;
-            $sql = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
+            $sql = "UPDATE lignepanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
 
             $array = array(
                 "qte" => $panier[$id_p]['qte'],
@@ -69,7 +69,7 @@ class ModelLignePanier
             $panier[$id_p]['qte']--;
 
             if (isset($_SESSION['idPanier'])) {
-                $sql = "UPDATE LignePanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
+                $sql = "UPDATE lignepanier SET qte = :qte WHERE idPanier = :idPanier AND idProduit = :idProduit;";
                 $array = array(
                     "qte" => $panier[$id_p]['qte'],
                     "idPanier" => $_SESSION['idPanier'],
@@ -79,7 +79,7 @@ class ModelLignePanier
         } else {
             unset($panier[$id_p]);
 
-            $sql = "DELETE FROM LignePanier WHERE idProduit = :id_p;";
+            $sql = "DELETE FROM lignepanier WHERE idProduit = :id_p;";
             $array = array("id_p" => $id_p);
         }
 
@@ -101,7 +101,7 @@ class ModelLignePanier
 
     public static function copiePanierBddLignePanier()
     {
-        $listeArticle = "SELECT * FROM LignePanier WHERE idPanier =" . $_SESSION['idPanier'] . " ORDER BY idProduit;";
+        $listeArticle = "SELECT * FROM lignepanier WHERE idPanier =" . $_SESSION['idPanier'] . " ORDER BY idProduit;";
         $req = Model::getPDO()->query($listeArticle);
         $req->setFetchMode(PDO::FETCH_CLASS, 'ModelLignePanier');
         $rep = $req->fetchAll();
@@ -113,7 +113,7 @@ class ModelLignePanier
             }
         } else {
             foreach ($_SESSION['panierSiteDeVente'] as $cle => $Produit) {                      //Pour chacune des lignes dans $_SESSION['panierSiteDeVente'];
-                $insert = "INSERT INTO LignePanier VALUES (:idProduit, :idPanier, :idUtilisateur, :qte);";      //Vu qu'il n'y a rien dans la BDD, on vient y insérer la $_SESSION
+                $insert = "INSERT INTO lignepanier VALUES (:idProduit, :idPanier, :idUtilisateur, :qte);";      //Vu qu'il n'y a rien dans la BDD, on vient y insérer la $_SESSION
                 $req = Model::getPDO()->prepare($insert);
                 $array = array(
                     "idProduit" => $cle,
@@ -129,7 +129,7 @@ class ModelLignePanier
 
     public static function deleteLignePanier()
     {
-        $sql = "DELETE FROM lignePanier WHERE idPanier = :idPanier";
+        $sql = "DELETE FROM lignepanier WHERE idPanier = :idPanier";
         $prep = Model::getPDO()->prepare($sql);
         $array = array(
             "idPanier" => $_SESSION['idPanier'],

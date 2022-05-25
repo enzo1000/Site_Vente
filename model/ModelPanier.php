@@ -8,7 +8,7 @@ class ModelPanier
 
     public static function getPanier($idUtilisateur)
     {
-        $req = Model::getPDO()->prepare(" SELECT idPanier FROM Panier WHERE idUtilisateur = :idUtilisateur");
+        $req = Model::getPDO()->prepare(" SELECT idPanier FROM panier WHERE idUtilisateur = :idUtilisateur");
         $array = array(
             "idUtilisateur" => $idUtilisateur,
         );
@@ -30,7 +30,7 @@ class ModelPanier
      */
     public static function creerPanier()
     {
-        $panierExiste = "SELECT * FROM Panier ORDER BY idPanier"; //On récup tout les paniers
+        $panierExiste = "SELECT * FROM panier ORDER BY idPanier"; //On récup tout les paniers
         $req = Model::getPDO()->query($panierExiste);
         $req->fetch(PDO::FETCH_CLASS, 'ModelPanier');
         $res = $req->fetchAll();
@@ -56,7 +56,7 @@ class ModelPanier
             $_SESSION['idPanier'] = $idPanier;
         } else {    //L'utilisateur a alors un panier
 
-            $idPanier = "SELECT idPanier FROM Panier WHERE idUtilisateur = :idUtilisateur";
+            $idPanier = "SELECT idPanier FROM panier WHERE idUtilisateur = :idUtilisateur";
             $req = Model::getPDO()->prepare($idPanier);
 
             $array = array(
@@ -69,12 +69,11 @@ class ModelPanier
 
             $_SESSION['idPanier'] = $res[0]['idPanier'];
         }
-
         header("Location:index.php?controller=ControllerLignePanier&action=copiePanierBdd_LignePanier");
     }
 
     public static function deletePanier() {
-        $sql = "DELETE FROM Panier WHERE idPanier = :idPanier";
+        $sql = "DELETE FROM panier WHERE idPanier = :idPanier";
         $prep = Model::getPDO()->prepare($sql);
         $array = array(
             "idPanier" => $_SESSION['idPanier'],

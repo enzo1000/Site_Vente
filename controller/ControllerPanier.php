@@ -19,6 +19,7 @@ class ControllerPanier
     {
         require_once File::build_path(array("model", "ModelPanier.php"));
         ModelPanier::deletePanier();
+        ModelPanier::creerPanier();
         header("Location:index.php");
     }
 }
