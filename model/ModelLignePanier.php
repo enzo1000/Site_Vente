@@ -19,7 +19,6 @@ class ModelLignePanier
             "idPanier" => $idPanier,
         );
         $req->execute($array);
-        $req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
         return $req->fetchAll();
     }
 

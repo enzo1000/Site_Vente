@@ -13,7 +13,7 @@ class ModelPanier
             "idUtilisateur" => $idUtilisateur,
         );
         $req->execute($array);
-        $req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
+        //$req->setFetchMode(PDO::FETCH_CLASS, 'ModelProduit');
         $idPanier = $req->fetchAll();
 
         header("Location:./index.php?controller=ControllerLignePanier&action=readAll_LignePanier&param=" . $idPanier[0]);
@@ -32,7 +32,7 @@ class ModelPanier
     {
         $panierExiste = "SELECT * FROM panier ORDER BY idPanier"; //On récup tout les paniers
         $req = Model::getPDO()->query($panierExiste);
-        $req->fetch(PDO::FETCH_CLASS, 'ModelPanier');
+        //$req->fetch(PDO::FETCH_CLASS, 'ModelPanier');
         $res = $req->fetchAll();
 
         if (!File::in_array_r($_SESSION['ModelUtilisateur']['mail'], $res)) {   //Si l'utilisateur n'en a pas
@@ -64,7 +64,7 @@ class ModelPanier
             );
 
             $req->execute($array);
-            $req->fetch(PDO::FETCH_CLASS, 'ModelPanier');
+            //$req->fetch(PDO::FETCH_CLASS, 'ModelPanier');
             $res = $req->fetchAll();
 
             $_SESSION['idPanier'] = $res[0]['idPanier'];

@@ -80,30 +80,8 @@
 
         /* follow me template */
         .made-with-love {
-            clear: left;
-            text-align: center;
-            font-size: 10px;
-            font-family: arial;
-            color: #fff;
+            display: none;
         }
-
-        .made-with-love i {
-            font-style: normal;
-            color: #F50057;
-            font-size: 14px;
-            position: relative;
-            top: 2px;
-        }
-
-        .made-with-love a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .made-with-love a:hover {
-            text-decoration: underline;
-        }
-
 
         /* for custom scrollbar for webkit browser*/
 
@@ -197,7 +175,7 @@
 
     echo "<a href='index.php'>";
     echo "<button type='button'>";
-    echo "Retour Articles";
+    echo "Continuez vos achats";
     echo "</button>";
     echo "</a>";
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="fr">
-
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -16,49 +15,7 @@
     </title>
 
     <style>
-        .content-header h1 {
-            margin-left: 20px;
-            line-height: 65px;
-            display: inline-block;
-        }
 
-        header .main-nav {
-            background-color: #FA8072;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 4000;
-            max-height: 69px;
-        }
-
-        header {
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        a.btn.btn-lg.btn-success {
-            line-height: 1.1;
-            margin-top: 12px;
-        }
-
-        a.btn.btn-lg.btn-info {
-            line-height: 1.1;
-            margin-top: 12px;
-        }
-
-        .navbar-light {
-            color: #fff;
-        }
-
-        .navbar-light {
-            color: #00e0d0;
-        }
-
-        .ds-btn li {
-            list-style: none;
-            float: right;
-            padding: 10px;
-        }
 
     </style>
 
@@ -67,6 +24,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light text-light py-3 main-nav">
             <div class="contenu_header">
+                <h1>Librairie AS-VENGERS</h1>
                 <ul class="ds-btn">
                     <?php
                     if (isset($_SESSION['panierSiteDeVente'])) {
@@ -77,7 +35,7 @@
                         echo "<li>";
                         echo "<span>";
                         echo "<a class='btn btn-lg btn-info'>";
-                        echo "Nombre d'articles dans votre panier : " . $total;
+                        echo "Panier : " . $total;
                         echo "</a>";
                         echo "</span>";
                         echo "</li>";
@@ -90,7 +48,7 @@
                         } else {
                             echo "<span>";
                             echo "<a class='btn btn-lg btn-success'>";
-                            echo "Connexion requise pour <br> consulter votre panier";
+                            echo "Connecter pour <br> voir le panier";
                             echo "</a>";
                         }
                         echo "</span>";
